@@ -1,9 +1,12 @@
-
 export default {
   mode: 'universal',
   /*
   ** Headers of the page
   */
+  env: {
+    analyticsID: process.env.GA_ID,
+  },
+
   head: {
     titleTemplate: '%s - RiotStats.com',
     meta: [
@@ -24,10 +27,6 @@ export default {
     ]
   },
 
-  googleAnalytics: {
-    id: 'UA-100060410-4'
-  },
-
   /*
   ** Customize the progress-bar color
   */
@@ -42,6 +41,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~/plugins/ga.js', mode: 'client' }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -52,16 +52,11 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://bootstrap-vue.js.org
-    'bootstrap-vue/nuxt',
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
-
-    '@nuxtjs/auth',
-
     'nuxt-i18n',
+    '@nuxtjs/auth',
+    '@nuxtjs/axios',
+    '@nuxtjs/dotenv',
+    'bootstrap-vue/nuxt',
   ],
 
   router: {
