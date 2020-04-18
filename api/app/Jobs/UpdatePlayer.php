@@ -86,7 +86,7 @@ class UpdatePlayer implements ShouldQueue
             usleep(500e3);
         }
 
-        $this->user->last_fetched_at = Carbon::now();
+        $this->user->fetched_at = Carbon::now();
         $this->user->save();
     }
 }
