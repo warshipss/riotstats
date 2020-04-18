@@ -6,6 +6,7 @@ use App\Models\Token;
 use App\Riot\Valorant;
 use App\Riot\TokenFeatures;
 use Illuminate\Console\Command;
+use App\Exceptions\InvalidTokenException;
 
 class CheckToken extends Command
 {
@@ -36,19 +37,24 @@ class CheckToken extends Command
     }
 
     /**
-     * Execute the console command.
+     * @return void
      *
-     * @return mixed
+     * @throws \App\Exceptions\InvalidTokenException
      */
     public function handle()
     {
-        $token = $this->getToken();
-
-        // Return if token exists
-        if ($token) {
-            return true;
+        try {
+            $this->getToken();
+        } catch (InvalidTokenException $e) {
+            $this->obtainNewToken();
         }
+    }
 
+    /**
+     * @return void
+     */
+    protected function obtainNewToken()
+    {
         /**
          * @var Valorant $api
          */
