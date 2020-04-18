@@ -29,8 +29,8 @@ class Kernel extends ConsoleKernel
 
         if (config('app.env') !== 'dev')
         {
-            $schedule->command('update:users')
-                ->everyFiveMinutes();
+//            $schedule->command('update:users')
+//                ->everyFiveMinutes();
         }
     }
 
