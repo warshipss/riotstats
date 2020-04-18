@@ -1,0 +1,1008 @@
+{
+  "data": {
+    "agents": {
+      "breach": {
+        "name": "Breach",
+        "origin": "",
+        "fullImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/breach_portrait.png",
+        "thumbImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/breach_thumb.png",
+        "bustImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/breach_bust.png",
+        "class": "initiator",
+        "description": "Breach fires powerful, targeted kinetic blasts to aggressively clear a path through enemy ground. The damage and disruption he inflicts ensures no fight is ever fair.",
+        "abilities": [
+          {
+            "name": "Aftershock",
+            "description": "EQUIP a fusion charge. FIRE the charge to set a slow-acting burst through the wall. The burst does heavy damage to anyone caught in its area.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/breach_c.png",
+            "key": "C",
+            "uses": 2,
+            "cost": {
+              "creds": 100
+            }
+          },
+          {
+            "name": "Flashpoint",
+            "description": "EQUIP a blinding charge. FIRE the charge to set a fast-acting burst through the wall. The charge detonates to blind all players looking at it.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/breach_q.png",
+            "key": "Q",
+            "uses": 2,
+            "cost": {
+              "creds": 200
+            }
+          },
+          {
+            "name": "Fault Line",
+            "description": "EQUIP a seismic blast. HOLD FIRE to increase the distance. RELEASE to set off the quake, dazing all players in its zone and in a line up to the zone.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/breach_e.png",
+            "key": "E",
+            "uses": 1,
+            "cost": {
+              "cooldown": 35
+            }
+          },
+          {
+            "name": "Rolling Thunder",
+            "description": "EQUIP a Seismic Charge. FIRE to send a cascading quake through all terrain in a large cone. The quake dazes and knocks up anyone caught in it.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/breach_x.png",
+            "key": "X",
+            "type": "ultimate",
+            "uses": 1,
+            "cost": {
+              "ult": 7
+            }
+          }
+        ]
+      },
+      "brimstone": {
+        "name": "Brimstone",
+        "origin": "United States",
+        "class": "controller",
+        "fullImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/brimstone_portrait.png",
+        "thumbImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/brimstone_thumb.png",
+        "bustImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/brimstone_bust.png",
+        "description": "Brimstone's orbital arsenal ensures his squad always has the advantage. His ability to deliver utility precisely and safely make him the unmatched boots-on-the-ground commander.",
+        "abilities": [
+          {
+            "name": "Stim Beacon",
+            "description": "EQUIP a stim beacon. FIRE to toss the stim beacon in front of Brimstone. Upon landing, the stim beacon will create a field that grants players RapidFire.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/brimstone_c.png",
+            "key": "C",
+            "uses": 2,
+            "cost": {
+              "creds": 100
+            }
+          },
+          {
+            "name": "Incendiary",
+            "description": "EQUIP an incendiary grenade launcher. FIRE to launch a grenade that detonates as it comes to a rest on the floor, creating a lingering fire zone that damages players within the zone.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/brimstone_q.png",
+            "key": "Q",
+            "uses": 1,
+            "cost": {
+              "creds": 200
+            }
+          },
+          {
+            "name": "Sky Smoke",
+            "description": "EQUIP a tactical map. FIRE to set locations where Brimstone's smoke clouds will land. ALTERNATE FIRE to confirm, launching long-lasting smoke clouds that block vision in the selected area.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/brimstone_e.png",
+            "key": "E",
+            "uses": 3,
+            "cost": {
+              "round": 1,
+              "creds": 100
+            }
+          },
+          {
+            "name": "Orbital Strike",
+            "description": "EQUIP a tactical map. FIRE to launch a lingering orbital strike laser at the selected location, dealing high damage-over-time to players caught in the selected area.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/brimstone_x.png",
+            "key": "X",
+            "type": "ultimate",
+            "uses": 1,
+            "cost": {
+              "ult": 6
+            }
+          }
+        ]
+      },
+      "cypher": {
+        "name": "Cypher",
+        "origin": "Morocco",
+        "class": "sentinel",
+        "fullImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/cypher_portrait.png",
+        "thumbImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/cypher_thumb.png",
+        "bustImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/cypher_bust.png",
+        "description": "Cypher is a one-man surveillance network who keeps tabs on the enemy's every move. No secret is safe. No maneuver goes unseen. Cypher is always watching.",
+        "abilities": [
+          {
+            "name": "Trapwire",
+            "description": "EQUIP a trapwire. FIRE to place a destructible and covert tripwire at the targeted location, creating a line that spans between the placed location and the wall opposite. Enemy players who cross a tripwire will be tethered, revealed, and dazed after a short period if they do not destroy the device in time. This ability can be picked up to be REDEPLOYED.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/cypher_c.png",
+            "key": "C",
+            "uses": 2,
+            "cost": {
+              "creds": 200
+            }
+          },
+          {
+            "name": "Cyber Cage",
+            "description": "INSTANTLY toss the cyber cage in front of Cypher. ACTIVATE to create a zone that blocks vision and slows enemies who pass through it.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/cypher_q.png",
+            "key": "Q",
+            "uses": 2,
+            "cost": {
+              "creds": 100
+            }
+          },
+          {
+            "name": "Spycam",
+            "description": "EQUIP a spycam. FIRE to place the spycam at the targeted location. RE-USE this ability to take control of the camera's view. While in control of the camera, FIRE to shoot a marking dart. This dart will reveal the location of any player struck by the dart.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/cypher_e.png",
+            "key": "E",
+            "uses": 1,
+            "cost": {
+              "reusable": 1
+            }
+          },
+          {
+            "name": "Neural Theft",
+            "description": "INSTANTLY use on a dead enemy player in your crosshairs to reveal the location of all living enemy players.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/cypher_x.png",
+            "key": "X",
+            "uses": 1,
+            "type": "ultimate",
+            "cost": {
+              "ult": 7
+            }
+          }
+        ]
+      },
+      "jett": {
+        "name": "Jett",
+        "origin": "South Korea",
+        "class": "duelist",
+        "fullImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/jett_portrait.png",
+        "thumbImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/jett_thumb.png",
+        "bustImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/jett_bust.png",
+        "description": "Jett\u2019s agile and evasive fighting style lets her take risks no one else can. She runs circles around every skirmish, cutting enemies up before they even know what hit them.      ",
+        "abilities": [
+          {
+            "name": "Cloudburst",
+            "description": "INSTANTLY throw a projectile that expands into a brief vision-blocking cloud on impact with a surface. HOLD the ability key to curve the smoke in the direction of your crosshair.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/jett_c.png",
+            "key": "C",
+            "uses": 3,
+            "cost": {
+              "creds": 100
+            }
+          },
+          {
+            "name": "Updraft",
+            "description": "INSTANTLY propel Jett high into the air.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/jett_q.png",
+            "key": "Q",
+            "uses": 2,
+            "cost": {
+              "creds": 200
+            }
+          },
+          {
+            "name": "Tailwind",
+            "description": "INSTANTLY propel Jett in the direction she is moving. If Jett is standing still, she will propel forward.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/jett_e.png",
+            "key": "E",
+            "uses": 1,
+            "cost": {
+              "kills": 2
+            }
+          },
+          {
+            "name": "Blade Storm",
+            "description": "EQUIP a set of highly accurate throwing knives that recharge on killing an opponent. FIRE to throw a single knife at your target. ALTERNATE FIRE to throw all remaining daggers at your target.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/jett_x.png",
+            "key": "X",
+            "uses": 1,
+            "type": "ultimate",
+            "cost": {
+              "ult": 7
+            }
+          }
+        ]
+      },
+      "omen": {
+        "name": "Omen",
+        "origin": "N/A",
+        "class": "controller",
+        "fullImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/omen_portrait.png",
+        "thumbImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/omen_thumb.png",
+        "bustImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/omen_bust.png",
+        "description": "Omen hunts in the shadows. He renders enemies blind, teleports across the field, then lets paranoia take hold as his foe scambles to uncover where he might strike next.",
+        "abilities": [
+          {
+            "name": "Shrouded Step",
+            "description": "EQUIP a shadow walk ability and see its range indicator. FIRE to begin a brief channel, then teleport to the marked location.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/omen_c.png",
+            "key": "C",
+            "uses": 2,
+            "cost": {
+              "creds": 100
+            }
+          },
+          {
+            "name": "Paranoia",
+            "description": "INSTANTLY fire a shadow projectile forward, briefly reducing the vision range of all players it touches. This projectile can pass straight through walls.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/omen_q.png",
+            "key": "Q",
+            "uses": 1,
+            "cost": {
+              "creds": 200
+            }
+          },
+          {
+            "name": "Dark Cover",
+            "description": "EQUIP a shadow orb and see its range indicator. FIRE to throw the shadow orb to the marked location, creating a long-lasting shadow sphere that blocks vision. HOLD ALTERNATE FIRE while targeting to move the marker further away. HOLD the ability key while targeting to move the marker closer.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/omen_e.png",
+            "key": "E",
+            "uses": 2,
+            "cost": {
+              "cooldown": 30
+            }
+          },
+          {
+            "name": "From the Shadows",
+            "description": "EQUIP a tactical map. FIRE to begin teleporting to the selected location. While teleporting, Omen will apppear as a Shade that can be destroyed by an enemy to cancel his teleport.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/omen_x.png",
+            "key": "X",
+            "uses": 1,
+            "type": "ultimate",
+            "cost": {
+              "ult": 7
+            }
+          }
+        ]
+      },
+      "phoenix": {
+        "name": "Phoenix",
+        "origin": "United Kingdom",
+        "class": "duelist",
+        "fullImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/phoenix_portrait.png",
+        "thumbImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/phoenix_thumb.png",
+        "bustImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/phoenix_bust.png",
+        "description": "Phoenix's star power shines through in his fighting style, igniting the battlefield with flash and flare. Whether he's got backup or not, he's rushing in to fight on his own terms.",
+        "abilities": [
+          {
+            "name": "Blaze",
+            "description": "EQUIP a flame wall. FIRE to create a line of flame that moves forward, creating a wall of fire that blocks vision and damages players passing through it. HOLD FIRE to bend the wall in the direction of your crosshair.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/phoenix_c.png",
+            "key": "C",
+            "uses": 1,
+            "cost": {
+              "creds": 200
+            }
+          },
+          {
+            "name": "Curveball",
+            "description": "EQUIP a flare orb that takes a curving path and detonates shortly after throwing. FIRE to curve the flare orb to the left, detonating and blinding any player who sees the orb. ALTERNATE FIRE to curve the flare orb to the right.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/phoenix_q.png",
+            "key": "Q",
+            "uses": 2,
+            "cost": {
+              "creds": 100
+            }
+          },
+          {
+            "name": "Hot Hands",
+            "description": "EQUIP a fireball. FIRE to throw a fireball that explodes after a set amount of time or upon hitting the ground, creating a lingering fire zone that damages enemies.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/phoenix_e.png",
+            "key": "E",
+            "uses": 1,
+            "cost": {
+              "kills": 2
+            }
+          },
+          {
+            "name": "Run it Back",
+            "description": "INSTANTLY place a marker at Phoenix's location. While this ability is active, dying or allowing the timer to expire will end this ability and bring Phoenix back to this location with full health.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/phoenix_e.png",
+            "key": "X",
+            "type": "ultimate",
+            "uses": 1,
+            "cost": {
+              "ult": 6
+            }
+          }
+        ]
+      },
+      "raze": {
+        "name": "Raze",
+        "origin": "N/A",
+        "class": "duelist",
+        "fullImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/raze_portrait.png",
+        "thumbImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/raze_thumb.png",
+        "bustImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/raze_bust.png",
+        "description": "Raze loves explosives. With her blunt-force-trauma playstyle, she excels at flushing entrenched enemies and clearing tight spaces with a generous dose of \"boom\".",
+        "abilities": [
+          {
+            "name": "Boom Bot",
+            "description": "EQUIP a Boom Bot. FIRE will deploy the bot, causing it to travel in a straight line on the ground, bouncing off walls. The Boom Bot will lock on to any enemies in its frontal cone and chase them, exploding for heavy damage if it reaches them.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/raze_c.png",
+            "key": "C",
+            "uses": 2,
+            "cost": {
+              "creds": 100
+            }
+          },
+          {
+            "name": "Blast Pack",
+            "description": "INSTANTLY throw a Blast Pack that will stick to surfaces. RE-USE the ability after deployment to detonate, damaging and moving anything hit.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/raze_q.png",
+            "key": "Q",
+            "uses": 1,
+            "cost": {
+              "creds": 200
+            }
+          },
+          {
+            "name": "Paint Shells",
+            "description": "EQUIP a cluster grenade. FIRE to throw the grenade, which does damage and creates sub-munitions, each doing damage to anyone in their range.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/raze_e.png",
+            "key": "E",
+            "uses": 2,
+            "cost": {
+              "round": 1,
+              "creds": 100
+            }
+          },
+          {
+            "name": "Showstopper",
+            "description": "EQUIP a rocket launcher. FIRE shoots a rocket that does massive area damage on contact with anything.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/raze_x.png",
+            "key": "X",
+            "type": "ultimate",
+            "uses": 1,
+            "cost": {
+              "ult": 6
+            }
+          }
+        ]
+      },
+      "sage": {
+        "name": "Sage",
+        "origin": "China",
+        "class": "sentinel",
+        "fullImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/sage_portrait.png",
+        "thumbImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/sage_thumb.png",
+        "bustImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/sage_bust.png",
+        "description": "Sage creates safety for herself and her team wherever she goes. Able to revive fallen friends and stave off forceful assaults, she provides a calm center to a hellish battlefield.",
+        "abilities": [
+          {
+            "name": "Barrier Orb",
+            "description": "EQUIP a barrier orb. FIRE places a solid wall. ALT FIRE rotates the targeter.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/sage_c.png",
+            "key": "C",
+            "uses": 1,
+            "cost": {
+              "creds": 300
+            }
+          },
+          {
+            "name": "Slow Orb",
+            "description": "EQUIP a slowing orb. FIRE to throw a slowing orb forward that detonates upon landing, creating a lingering field that slows players caught inside of it.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/sage_q.png",
+            "key": "Q",
+            "uses": 2,
+            "cost": {
+              "creds": 100
+            }
+          },
+          {
+            "name": "Healing Orb",
+            "description": "EQUIP a healing orb. FIRE with your crosshairs over a damaged ally to activate a heal-over-time on them. ALT FIRE while Sage is damaged to activate a self heal-over-time.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/sage_e.png",
+            "key": "E",
+            "uses": 1,
+            "cost": {
+              "cooldown": 35
+            }
+          },
+          {
+            "name": "Resurrection",
+            "description": "EQUIP a resurrection ability. FIRE with your crosshairs placed over a dead ally to begin resurrecting them. After a brief channel, the ally will be brought back to life with full health.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/sage_x.png",
+            "key": "X",
+            "type": "ultimate",
+            "uses": 1,
+            "cost": {
+              "ult": 7
+            }
+          }
+        ]
+      },
+      "sova": {
+        "name": "Sova",
+        "origin": "Russia",
+        "class": "initiator",
+        "fullImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/sova_portrait.png",
+        "thumbImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/sova_thumb.png",
+        "bustImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/sova_bust.png",
+        "description": "Sova tracks, finds, and eliminates enemies with ruthless efficiency and precision. His custom bow and incredible scouting abilities ensure that even if you run, you cannot hide. ",
+        "abilities": [
+          {
+            "name": "Shock Bolt",
+            "description": "EQUIP a bow with a shock bolt. FIRE to send the explosive bolt forward, detonating upon collision and damaging players nearby. HOLD FIRE to extend the range of the projectile. ALTERNATE FIRE to add up to two bounces to this arrow.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/sova_q.png",
+            "key": "Q",
+            "uses": 1,
+            "cost": {
+              "creds": 300
+            }
+          },
+          {
+            "name": "Owl Drone",
+            "description": "EQUIP an owl drone. FIRE to deploy and take control of movement of the drone. While in control of the drone, FIRE to shoot a marking dart. This dart will reveal the location of any player struck by the dart.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/sova_c.png",
+            "key": "C",
+            "uses": 2,
+            "cost": {
+              "creds": 100
+            }
+          },
+          {
+            "name": "Recon Bolt",
+            "description": "EQUIP a bow with recon bolt. FIRE to send the recon bolt forward, activating upon collision and revealing the location of nearby enemies caught in the line of sight of the bolt. Enemies can destroy this bolt. HOLD FIRE to extend the range of the projectile. ALTERNATE FIRE to add up to two bounces to this arrow. ",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/sova_e.png",
+            "key": "E",
+            "uses": 1,
+            "cost": {
+              "cooldown": 35
+            }
+          },
+          {
+            "name": "Hunter\u2019s Fury",
+            "description": "EQUIP a bow with three long-range, wall-piercing energy blasts. FIRE to release an energy blast in a line in front of Sova, dealing damage and revealing the location of enemies caught in the line. This ability can be RE-USED up to two more times while the ability timer is active.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/sova_x.png",
+            "key": "X",
+            "type": "ultimate",
+            "uses": 1,
+            "cost": {
+              "ult": 6
+            }
+          }
+        ]
+      },
+      "viper": {
+        "name": "Viper",
+        "origin": "United States",
+        "class": "controller",
+        "fullImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/viper_portrait.png",
+        "thumbImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/viper_thumb.png",
+        "bustImage": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/viper_bust.png",
+        "description": "Viper deploys an array of poisonous chemical devices to control the battlefield and cripple the enemy's vision. If the toxins don't kill her prey, her mindgames surely will.",
+        "abilities": [
+          {
+            "name": "Snake Bite",
+            "description": "EQUIP a chemical launcher. FIRE to launch a canister that shatters upon hitting the floor, creating a lingering chemical zone that damages and slows enemies.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/viper_c.png",
+            "key": "C",
+            "uses": 2,
+            "cost": {
+              "creds": 100
+            }
+          },
+          {
+            "name": "Poison Cloud",
+            "description": "EQUIP a gas emitter. FIRE to throw the emitter that perpetually remains throughout the round. RE-USE the ability to create a toxic gas cloud at the cost of fuel. This ability can be RE-USED more than once and can be picked up to be REDEPLOYED.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/viper_q.png",
+            "key": "Q",
+            "uses": 1,
+            "cost": {
+              "creds": 200
+            }
+          },
+          {
+            "name": "Toxic Screen",
+            "description": "EQUIP a gas emitter launcher. FIRE to deploy a long line of gas emitters. RE-USE the ability to create a tall wall of toxic gas at the cost of fuel. This ability can be RE-USED more than once.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/viper_e.png",
+            "key": "E",
+            "uses": 1,
+            "cost": {
+              "reusable": 1
+            }
+          },
+          {
+            "name": "Viper\u2019s Pit",
+            "description": "EQUIP a chemical sprayer. FIRE to spray a chemical cloud in all directions around Viper, creating a large cloud that reduces the vision range and maximum health of players inside of it.",
+            "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/abilities/viper_x.png",
+            "key": "X",
+            "type": "ultimate",
+            "uses": 1,
+            "cost": {
+              "ult": 7
+            }
+          }
+        ]
+      }
+    },
+    "weapons": {
+      "classic": {
+        "name": "Classic",
+        "type": "Sidearm",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/classic-standard.png",
+        "creds": 0,
+        "magazine": 12,
+        "wallPenetration": "low",
+        "primary": {
+          "mode": "Semi-Automatic",
+          "fireRate": 6.75
+        },
+        "alternate": {
+          "mode": "3-Round Burst, Spread Increase",
+          "fireRate": 2.22
+        },
+        "damage": {
+          "0-30m": {
+            "body": 26,
+            "head": 78,
+            "leg": 22
+          },
+          "20-50m": {
+            "body": 22,
+            "head": 66,
+            "leg": 18
+          }
+        }
+      },
+      "shorty": {
+        "name": "Shorty",
+        "type": "Sidearm",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/shorty-standard.png",
+        "creds": 200,
+        "magazine": 2,
+        "wallPenetration": "low",
+        "primary": {
+          "mode": "Semi-Automatic",
+          "fireRate": 3.3
+        },
+        "damage": {
+          "0-9m": {
+            "body": 12,
+            "head": 36,
+            "leg": 10
+          },
+          "9-15m": {
+            "body": 8,
+            "head": 24,
+            "leg": 6
+          }
+        }
+      },
+      "frenzy": {
+        "name": "Frenzy",
+        "type": "Sidearm",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/frenzy-standard.png",
+        "creds": 400,
+        "magazine": 13,
+        "wallPenetration": "low",
+        "primary": {
+          "mode": "Full-Automatic",
+          "fireRate": 10
+        },
+        "damage": {
+          "0-20m": {
+            "body": 26,
+            "head": 78,
+            "leg": 22
+          },
+          "20-50m": {
+            "body": 21,
+            "head": 63,
+            "leg": 17
+          }
+        }
+      },
+      "ghost": {
+        "name": "Ghost",
+        "type": "Sidearm",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/ghost-standard.png",
+        "creds": 500,
+        "magazine": 15,
+        "wallPenetration": "medium",
+        "primary": {
+          "mode": "Semi-Automatic",
+          "fireRate": 6.75
+        },
+        "damage": {
+          "0-30m": {
+            "body": 30,
+            "head": 105,
+            "leg": 26
+          },
+          "30-50m": {
+            "body": 25,
+            "head": 88,
+            "leg": 21
+          }
+        }
+      },
+      "sheriff": {
+        "name": "Sheriff",
+        "type": "Sidearm",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/sheriff-standard.png",
+        "creds": 800,
+        "magazine": 6,
+        "wallPenetration": "high",
+        "primary": {
+          "mode": "Semi-Automatic",
+          "fireRate": 4
+        },
+        "damage": {
+          "0-30m": {
+            "body": 55,
+            "head": 160,
+            "leg": 47
+          },
+          "30-50m": {
+            "body": 50,
+            "head": 145,
+            "leg": 43
+          }
+        }
+      },
+      "stinger": {
+        "name": "Stinger",
+        "type": "SMG",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/stinger-standard.png",
+        "creds": 1000,
+        "magazine": 20,
+        "wallPenetration": "low",
+        "primary": {
+          "mode": "Full-Automatic",
+          "fireRate": 18
+        },
+        "alternate": {
+          "mode": "1.15x, 4-Round  Burst, Spread Reduction",
+          "fireRate": 4
+        },
+        "damage": {
+          "0-20m": {
+            "body": 27,
+            "head": 67,
+            "leg": 23
+          },
+          "20-50m": {
+            "body": 25,
+            "head": 62,
+            "leg": 21
+          }
+        }
+      },
+      "spectre": {
+        "name": "Spectre",
+        "type": "SMG",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/spectre-standard.png",
+        "creds": 1600,
+        "magazine": 30,
+        "wallPenetration": "medium",
+        "primary": {
+          "mode": "Full-Automatic",
+          "fireRate": 13.33
+        },
+        "alternate": {
+          "mode": "1.15x, Spread Reduction",
+          "fireRate": 12
+        },
+        "damage": {
+          "0-20m": {
+            "body": 26,
+            "head": 78,
+            "leg": 22
+          },
+          "20-50m": {
+            "body": 22,
+            "head": 66,
+            "leg": 18
+          }
+        }
+      },
+      "bucky": {
+        "name": "Bucky",
+        "type": "Shotgun",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/bucky-standard.png",
+        "creds": 900,
+        "magazine": 5,
+        "wallPenetration": "low",
+        "primary": {
+          "mode": "Semi-Automatic",
+          "fireRate": 1.1
+        },
+        "alternate": {
+          "mode": "Semi-automatic, Air Burst",
+          "fireRate": 1.1
+        },
+        "damage": {
+          "0-8m": {
+            "body": 22,
+            "head": 44,
+            "leg": 19
+          },
+          "8-12m": {
+            "body": 17,
+            "head": 34,
+            "leg": 14
+          },
+          "12-50m": {
+            "body": 9,
+            "head": 18,
+            "leg": 8
+          }
+        }
+      },
+      "judge": {
+        "name": "Judge",
+        "type": "Shotgun",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/judge-standard.png",
+        "creds": 1500,
+        "magazine": 7,
+        "wallPenetration": "medium",
+        "primary": {
+          "mode": "Full-Automatic",
+          "fireRate": 3.5
+        },
+        "damage": {
+          "0-10m": {
+            "body": 17,
+            "head": 34,
+            "leg": 14
+          },
+          "10-15m": {
+            "body": 13,
+            "head": 26,
+            "leg": 11
+          },
+          "15-50m": {
+            "body": 10,
+            "head": 20,
+            "leg": 9
+          }
+        }
+      },
+      "bulldog": {
+        "name": "Bulldog",
+        "type": "Assault Rifle",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/bulldog-standard.png",
+        "creds": 2100,
+        "magazine": 24,
+        "wallPenetration": "medium",
+        "primary": {
+          "mode": "Full-Automatic",
+          "fireRate": 9.15
+        },
+        "alternate": {
+          "mode": "1.25x, 3-Round Burst",
+          "fireRate": 4
+        },
+        "damage": {
+          "0-50m": {
+            "body": 35,
+            "head": 116,
+            "leg": 30
+          }
+        }
+      },
+      "guardian": {
+        "name": "Guardian",
+        "type": "Assault Rifle",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/guardian-standard.png",
+        "creds": 2700,
+        "magazine": 12,
+        "wallPenetration": "medium",
+        "primary": {
+          "mode": "Semi-Automatic",
+          "fireRate": 6.5
+        },
+        "alternate": {
+          "mode": "1.5x, Slight Spread Reduction",
+          "fireRate": 6.5
+        },
+        "damage": {
+          "0-50m": {
+            "body": 65,
+            "head": 195,
+            "leg": 49
+          }
+        }
+      },
+      "phantom": {
+        "name": "Phantom",
+        "type": "Assault Rifle",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/phantom-standard.png",
+        "creds": 2900,
+        "magazine": 30,
+        "wallPenetration": "medium",
+        "primary": {
+          "mode": "Full-Automatic",
+          "fireRate": 11
+        },
+        "alternate": {
+          "mode": "1.25x, Slight Spread Reduction",
+          "fireRate": 9.9
+        },
+        "damage": {
+          "0-15m": {
+            "body": 39,
+            "head": 156,
+            "leg": 33
+          },
+          "15-30m": {
+            "body": 35,
+            "head": 150,
+            "leg": 30
+          },
+          "30-50m": {
+            "body": 31,
+            "head": 124,
+            "leg": 26
+          }
+        }
+      },
+      "vandal": {
+        "name": "Vandal",
+        "type": "Assault Rifle",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/vandal-standard.png",
+        "creds": 2900,
+        "magazine": 25,
+        "wallPenetration": "medium",
+        "primary": {
+          "mode": "Full-Automatic",
+          "fireRate": 9.25
+        },
+        "alternate": {
+          "mode": "1.25x, Slight Spread Reduction",
+          "fireRate": 8.32
+        },
+        "damage": {
+          "0-50m": {
+            "body": 39,
+            "head": 156,
+            "leg": 33
+          }
+        }
+      },
+      "marshal": {
+        "name": "Marshal",
+        "type": "Sniper",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/marshal-standard.png",
+        "creds": 1100,
+        "magazine": 5,
+        "wallPenetration": "medium",
+        "primary": {
+          "mode": "Semi-Automatic",
+          "fireRate": 1.5
+        },
+        "alternate": {
+          "mode": "2.5x, Slight Spread Reduction",
+          "fireRate": 1.2
+        },
+        "damage": {
+          "0-50m": {
+            "body": 101,
+            "head": 202,
+            "leg": 85
+          }
+        }
+      },
+      "operator": {
+        "name": "Operator",
+        "type": "Sniper",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/operator-standard.png",
+        "creds": 4500,
+        "magazine": 5,
+        "wallPenetration": "high",
+        "primary": {
+          "mode": "Semi-Automatic",
+          "fireRate": 0.75
+        },
+        "alternate": {
+          "mode": "2.5x or 5x, Significant Spread Reduction",
+          "fireRate": 0.75
+        },
+        "damage": {
+          "0-50m": {
+            "body": 150,
+            "head": 255,
+            "leg": 127
+          }
+        }
+      },
+      "ares": {
+        "name": "Ares",
+        "type": "Heavy",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/ares-standard.png",
+        "creds": 1700,
+        "magazine": 50,
+        "wallPenetration": "high",
+        "primary": {
+          "mode": "Full-Automatic",
+          "fireRate": "10 to 13"
+        },
+        "alternate": {
+          "mode": "1.25x, Slight Spread Reduction",
+          "fireRate": "10 to 13"
+        },
+        "damage": {
+          "0-30m": {
+            "body": 30,
+            "head": 72,
+            "leg": 25
+          },
+          "30-50m": {
+            "body": 28,
+            "head": 67,
+            "leg": 23
+          }
+        }
+      },
+      "odin": {
+        "name": "Odin",
+        "type": "Heavy",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/weapons/odin-standard.png",
+        "creds": 3200,
+        "magazine": 12,
+        "wallPenetration": "medium",
+        "primary": {
+          "mode": "Full-Automatic",
+          "fireRate": "12 to 15.6"
+        },
+        "alternate": {
+          "mode": "1.25x, Slight Spread Reduction",
+          "fireRate": 15.6
+        },
+        "damage": {
+          "0-30m": {
+            "body": 38,
+            "head": 95,
+            "leg": 32
+          },
+          "30-50m": {
+            "body": 31,
+            "head": 77,
+            "leg": 26
+          }
+        }
+      }
+    },
+    "classes": {
+      "controller": {
+        "name": "Controller",
+        "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/types/controller.png",
+        "description": "Controllers are experts in slicing up dangerous territory to set their team up for success."
+      },
+      "duelist": {
+        "name": "Duelist",
+        "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/types/duelist.png",
+        "description": "Duelists are self-sufficient fraggers who their team expects, through abilities and skills, to get high frags and seek out engagements first."
+      },
+      "sentinel": {
+        "name": "Sentinel",
+        "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/types/sentinel.png",
+        "description": "Sentinels are defensive experts who can lock down areas and watch flanks, both aon attacker and defender rounds."
+      },
+      "initiator": {
+        "name": "Initiator",
+        "iconUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/agents/types/initiator.png",
+        "description": "Initiators challenge angles by setting up their team to enter contested ground and push defenders away."
+      }
+    },
+    "maps": {
+      "bind": {
+        "name": "Bind",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/maps/haven.jpg"
+      },
+      "haven": {
+        "name": "Haven",
+        "imageUrl": "https://trackercdn.com/cdn/tracker.gg/valorant/db/maps/haven.jpg"
+      }
+    }
+  }
+}

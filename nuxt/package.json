@@ -1,0 +1,29 @@
+{
+  "name": "riotstats",
+  "version": "1.0.0",
+  "description": "Valorant stats tracker",
+  "author": "Alex Balatsky &lt;alex@skylex.pro&gt;",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/auth": "^4.9.1",
+    "@nuxtjs/axios": "^5.9.7",
+    "@nuxtjs/dotenv": "^1.4.0",
+    "@nuxtjs/google-analytics": "^2.2.3",
+    "accept-language-parser": "^1.5.0",
+    "bootstrap": "^4.1.3",
+    "bootstrap-vue": "^2.0.0",
+    "cookie": "^0.4.0",
+    "lodash": "^4.17.15",
+    "node-sass": "^4.13.1",
+    "nuxt": "^2.0.0",
+    "nuxt-i18n": "^6.9.1",
+    "sass-loader": "^8.0.2"
+  },
+  "devDependencies": {}
+}

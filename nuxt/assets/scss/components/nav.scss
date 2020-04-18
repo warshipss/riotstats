@@ -1,0 +1,24 @@
+.navbar {
+  padding: 0;
+  background: #111;
+  border-bottom: 2px solid rgba(51, 51, 51, 0.25);
+
+  .nav-link {
+    height: 5rem;
+    display: flex;
+    padding: 0 2rem;
+    align-items: center;
+  }
+
+  &-brand {
+    color: #fff;
+    height: 5rem;
+    display: flex;
+    font-size: 1rem;
+    padding: 0 3rem;
+    font-weight: bold;
+    align-items: center;
+    text-transform: uppercase;
+    font-family: $headings-font-family;
+  }
+}

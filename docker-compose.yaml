@@ -1,0 +1,111 @@
+version: '3.7'
+
+services:
+  nuxt:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./configs/nuxt.dockerfile
+    env_file:
+      - .env
+    networks:
+      reverse:
+        aliases:
+        - riotstats_nuxt
+    volumes:
+      - ./nuxt:/app
+
+  api:
+    image: abiosoft/caddy:no-stats
+    restart: always
+    networks:
+      backend:
+      reverse:
+        aliases:
+        - riotstats
+    volumes:
+      - ./api:/app
+      - caddy-data:/root/.caddy
+      - ./configs/Caddyfile:/etc/Caddyfile
+
+  db:
+    image: mysql:8
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - backend
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+
+  pma:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    networks:
+      backend:
+      reverse:
+        aliases:
+          - riotstats_pma
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+
+  redis:
+    image: redis
+    restart: always
+    volumes:
+      - redis-data:/data
+    networks:
+      - backend
+
+  php:
+    build:
+      context: .
+      dockerfile: ./configs/php.dockerfile
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - backend
+    volumes:
+      - ./api:/app
+
+  queue:
+    build:
+      context: .
+      dockerfile: ./configs/php.dockerfile
+    restart: always
+    env_file:
+      - .env
+    environment:
+      CONTAINER_ROLE: queue
+    networks:
+      - backend
+    volumes:
+      - ./api:/app
+
+  cron:
+    build:
+      context: .
+      dockerfile: ./configs/php.dockerfile
+    restart: always
+    env_file:
+      - .env
+    environment:
+      CONTAINER_ROLE: cron
+    networks:
+      - backend
+    volumes:
+      - ./api:/app
+
+networks:
+  backend:
+  reverse:
+    external:
+      name: caddy_reverse
+
+volumes:
+  db-data:
+  redis-data:
+  caddy-data:

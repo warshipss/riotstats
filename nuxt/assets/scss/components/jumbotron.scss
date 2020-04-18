@@ -1,0 +1,14 @@
+.jumbotron {
+  display: flex;
+  border-radius: 0;
+  text-align: center;
+  flex-direction: row;
+  background: #111 url('/img/jumbo.jpg') center / cover;
+
+  &__title {
+    color: $body-bg;
+    font-size: 4rem;
+    text-transform: uppercase;
+    text-shadow: 0 0 0.12em rgba(0, 0, 0, .3);
+  }
+}

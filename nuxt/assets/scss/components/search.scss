@@ -1,0 +1,36 @@
+.search {
+  @include clip();
+
+  padding: 2rem;
+  max-width: 20rem;
+  background: #0f1923;
+
+  &__title {
+    color: $body-bg;
+  }
+
+  &__input {
+    border: none;
+    color: $body-bg;
+    font-size: 1rem;
+    border-radius: 0;
+    background: #0f1923;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+      background: lighten(#0f1923, 5%);
+    }
+  }
+
+  &__button {
+    width: 100%;
+    color: $body-bg;
+    font-weight: 500;
+    border-radius: 0;
+    padding: 1rem 2rem;
+    font-size: .875rem;
+    text-transform: uppercase;
+    border: 1px solid $body-bg;
+  }
+}
