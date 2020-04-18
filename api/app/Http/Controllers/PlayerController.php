@@ -54,7 +54,7 @@ class PlayerController extends Controller
             return ['error' => 'SEARCHING_FOR_USER'];
         }
 
-        if ($user->fetched_at->lt(Carbon::now()->subHours(12))) {
+        if (! $user->fetched_at || $user->fetched_at->lt(Carbon::now()->subHours(12))) {
             UpdatePlayer::dispatch($user);
         }
 
