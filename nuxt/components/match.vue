@@ -109,19 +109,27 @@
         const colors = ['#1B1464', '#FFC312', '#12CBC4', '#ED4C67', '#A3CB38', '#1289A7', '#D980FA', '#B53471']
         const parties = uniq(Object.values(this.match.data.players).map(p => p.party))
 
-        return Object.fromEntries(parties.map((p, i) => {
-          return [p, colors[i]]
-        }))
+        // TODO: Replace to Object.fromEntries()
+        let result = {}
+        parties.map((p, i) => result[p] = colors[i])
+
+        return result
       },
 
       score() {
-        return Object.fromEntries(Object.entries(this.match.data.score).map(([k, v]) => {
+        const scores = Object.entries(this.match.data.score).map(([k, v]) => {
           if (k === this.player.team) {
             return ['home', v]
           }
 
           return ['away', v]
-        }))
+        })
+
+        // TODO: Replace to Object.fromEntries()
+        let result = {}
+        scores.map(score => result[score[0]] = score[1])
+
+        return result
       },
 
       relativeMatchResult()
