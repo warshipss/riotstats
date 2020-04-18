@@ -23,8 +23,6 @@
     async asyncData({ app, params }) {
       const { data } = await app.$axios.get('/player/profile', { params })
 
-      console.log(data.data)
-
       return {
         profile: data.data,
       }

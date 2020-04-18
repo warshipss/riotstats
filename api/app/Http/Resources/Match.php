@@ -17,7 +17,6 @@ class Match extends JsonResource
         return [
             'uid' => $this->uid,
             'data' => $this->data,
-            'original' => $this->original,
             'users' => ShortProfile::collection($this->users),
         ];
     }
