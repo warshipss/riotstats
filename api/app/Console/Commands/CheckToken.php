@@ -2,8 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Token;
+use App\Riot\Valorant;
 use App\Riot\TokenFeatures;
-use App\Jobs\ObtainNewToken;
 use Illuminate\Console\Command;
 
 class CheckToken extends Command
@@ -43,8 +44,21 @@ class CheckToken extends Command
     {
         $token = $this->getToken();
 
-        if (! $token) {
-            ObtainNewToken::dispatch();
+        // Return if token exists
+        if ($token) {
+            return true;
         }
+
+        /**
+         * @var Valorant $api
+         */
+        $api = app(Valorant::class);
+
+        $token = $api->getToken();
+
+        Token::firstOrCreate([
+            'token' => $token->token,
+            'expires_at' => $token->expiry,
+        ]);
     }
 }
