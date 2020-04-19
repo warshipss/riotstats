@@ -7,19 +7,28 @@
 
   &__title {
     color: $body-bg;
+    text-align: center;
   }
 
   &__input {
     border: none;
     color: $body-bg;
     font-size: 1rem;
+    padding: .5rem 0;
     border-radius: 0;
-    background: #0f1923;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    background: $body-color;
 
     &:focus {
       outline: none;
+      color: $body-bg;
       box-shadow: none;
-      background: lighten(#0f1923, 5%);
+      background: $body-color;
+    }
+
+    &::placeholder {
+      font-weight: 500;
     }
   }
 

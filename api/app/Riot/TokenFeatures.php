@@ -2,9 +2,9 @@
 
 namespace App\Riot;
 
-use App\Exceptions\InvalidTokenException;
 use Carbon\Carbon;
 use App\Models\Token;
+use App\Exceptions\InvalidTokenException;
 
 trait TokenFeatures
 {

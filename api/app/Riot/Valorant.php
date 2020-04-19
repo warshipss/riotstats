@@ -63,6 +63,21 @@ class Valorant
     }
 
     /**
+     * @param $name
+     * @param $tag
+     *
+     * @return mixed
+     */
+    public function getUid($name, $tag)
+    {
+        return $this->request('get', $this->config->url . '/uid', compact('name', 'tag'), [
+            'headers' => [
+                'Authorization' => $this->config->secret,
+            ]
+        ]);
+    }
+
+    /**
      * @param $player
      * @param int $from
      * @param null $to

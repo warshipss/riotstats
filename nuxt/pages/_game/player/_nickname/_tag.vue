@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>{{ profile.nickname }} #{{ profile.tag }}</h1>
+  <div class="profile">
+    <h1 class="profile__nickname">{{ profile.nickname }} #{{ profile.tag }}</h1>
     <h2>{{ $t('Matches') }}</h2>
 
     <div class="matches">

@@ -3,14 +3,6 @@
     <div v-b-toggle="match.uid" :class="['match__trigger', { match__trigger_victory: relativeMatchResult === 'victory' }]">
       <img :src="agentImage(player.agent)" class="match__agent" />
 
-      <div class="match__squad-size" v-if="squadSize > 1">
-        Squad size: {{ squadSize }}
-      </div>
-
-      <div class="match__map">
-        Map: {{ match.data.map }}
-      </div>
-
       <div class="stat">
         <div class="stat__value">{{ Math.floor(player.score / player.rounds) }}</div>
         <div class="stat__label">Avg. Combat Score</div>
@@ -27,68 +19,129 @@
         <div class="stat__value">{{ player.kills + ' / ' + player.deaths + ' / ' + player.assists }}</div>
         <div class="stat__label">KDA</div>
       </div>
+
+      <div class="match__meta">
+        <div class="match__meta-item">
+          <i class="icon-map" /> Map: {{ match.data.map }}
+        </div>
+
+        <div class="match__meta-item">
+          <i class="icon-clock" /> {{ ago(match) }}
+        </div>
+
+        <div class="match__meta-item" v-if="squadSize > 1">
+          <i class="icon-users-outline" /> Squad size: {{ squadSize }}
+        </div>
+      </div>
+
+      <div class="match__details-btn">
+        <img class="match__details-img" src="/img/icons/arrow.svg" />
+      </div>
     </div>
 
     <b-collapse :id="match.uid">
-      <b-card>
-        <table class="table table-striped match__table">
+      <div class="match__details">
+        <table class="match-table">
           <thead>
-          <tr class="match__groupings">
-            <th></th>
-            <th colspan="2">Basic</th>
+          <tr class="match-table__groups">
+            <th colspan="2"></th>
+            <th colspan="6">Basic</th>
             <th colspan="3">Multikills</th>
             <th colspan="3">Entry</th>
           </tr>
-          <tr>
-            <td></td>
-            <td>Player</td>
-            <td>Team</td>
-<!--            <td>Party</td>-->
-            <td>K/D/A</td>
-            <td>ADR</td>
+          <tr class="match-table__stats">
+            <th colspan="2"></th>
+            <th>
+              <a href="#" class="match-table__stat-name" :title="$t('Kills')" v-b-tooltip.hover
+                 @click.prevent="sortBy('kills')">K</a>
+            </th>
+            <th>
+              <a href="#" class="match-table__stat-name" :title="$t('Deaths')" v-b-tooltip.hover
+                 @click.prevent="sortBy('deaths')">D</a>
+            </th>
+            <th>
+              <a href="#" class="match-table__stat-name" :title="$t('Assists')" v-b-tooltip.hover
+                 @click.prevent="sortBy('assists')">A</a>
+            </th>
+            <th>
+              <a href="#" class="match-table__stat-name" :title="$t('Kills / Deaths ratio')" v-b-tooltip.hover
+                 @click.prevent="sortBy('kd')">K/D</a>
+            </th>
+            <th>
+              <a href="#" class="match-table__stat-name" :title="$t('Average combat score per round')" v-b-tooltip.hover
+                 @click.prevent="sortBy('score')">ACS</a>
+            </th>
+            <th>
+              <a href="#" class="match-table__stat-name" :title="$t('Average damage per round')" v-b-tooltip.hover
+                 @click.prevent="sortBy('damage')">ADR</a>
+            </th>
 
-            <td>3K</td>
-            <td>4K</td>
-            <td>Ace</td>
+            <th>
+              <a href="#" class="match-table__stat-name" :title="$t('3 kills rounds')" v-b-tooltip.hover @click.prevent>3K</a>
+            </th>
 
-            <td>EK</td>
-            <td>ED</td>
-            <td>ES%</td>
+            <th>
+              <a href="#" class="match-table__stat-name" :title="$t('4 kills rounds')" v-b-tooltip.hover @click.prevent>4K</a>
+            </th>
+
+            <th>
+              <a href="#" class="match-table__stat-name" :title="$t('5 kills rounds')" v-b-tooltip.hover @click.prevent>Ace</a>
+            </th>
+
+            <th>
+              <a class="match-table__stat-name" :title="$t('Entry kills')" v-b-tooltip.hover href="#" @click.prevent>EK</a>
+            </th>
+
+            <th>
+              <a href="#" class="match-table__stat-name" :title="$t('Entry deaths')" v-b-tooltip.hover @click.prevent>ED</a>
+            </th>
+
+            <th>
+              <a href="#" class="match-table__stat-name" :title="$t('Entry success')" v-b-tooltip.hover @click.prevent>ES%</a>
+            </th>
           </tr>
           </thead>
 
           <tbody>
-          <tr v-for="(player, uid) of match.data.players">
+          <tr :class="{ 'match-table__even': isEven(player) }" :key="player.uid" v-for="(player, i) of players">
             <td class="match__agent-cell">
               <img :src="agentImage(player.agent)" class="match__agent match__agent_small" />
             </td>
             <td :style="{ borderLeft: '.2rem solid ' + parties[player.party] }">
-              <nuxt-link :to="$playerPath(users[uid].nickname, users[uid].tag)">
-                {{ users[uid].nickname }} #{{ users[uid].tag }}
+              <nuxt-link :to="$playerPath(users[player.uid].nickname, users[player.uid].tag)">
+                {{ users[player.uid].nickname }} #{{ users[player.uid].tag }}
               </nuxt-link>
             </td>
-            <td>{{ player.team }}</td>
-<!--            <td>{{ player.partyId }}</td>-->
-            <td>{{ player.kills + ' / ' + player.deaths + ' / ' + player.assists }}</td>
-            <td>{{ Math.floor(player.damage / player.rounds) }}</td>
 
-            <td></td>
-            <td></td>
-            <td></td>
+            <td class="match-table__stat-value match-table__first">{{ player.kills }}</td>
+            <td class="match-table__stat-value">{{ player.deaths }}</td>
+            <td class="match-table__stat-value">{{ player.assists }}</td>
+            <td class="match-table__stat-value">{{ (player.kills / player.deaths).toFixed(2) }}</td>
+            <td class="match-table__stat-value">{{ Math.floor(player.score / player.rounds) }}</td>
+            <td class="match-table__stat-value">{{ Math.floor(player.damage / player.rounds) }}</td>
 
-            <td></td>
-            <td></td>
-            <td></td>
+            <td class="match-table__soon" rowspan="10" colspan="6" v-if="i === 0">
+              {{ $t('Coming soon') }}...
+            </td>
+
+<!--            <td class=" match-table__first"></td>-->
+<!--            <td></td>-->
+<!--            <td></td>-->
+
+<!--            <td class=" match-table__first"></td>-->
+<!--            <td></td>-->
+<!--            <td></td>-->
           </tr>
           </tbody>
         </table>
-      </b-card>
+      </div>
     </b-collapse>
   </div>
 </template>
 
 <script>
-  import { keyBy, uniq } from 'lodash'
+  import moment from 'moment'
+  import { orderBy, keyBy, uniq } from 'lodash'
 
   export default
   {
@@ -97,9 +150,39 @@
       current: String,
     },
 
+    data() {
+      return {
+        sortFn: 'score',
+        sortKey: 'score',
+        sortDirection: 'desc',
+      }
+    },
+
     methods: {
       agentImage (agent) {
         return '/img/agents/' + agent + '/sm.png'
+      },
+
+      isEven (player) {
+        return player.team === 'Blue'
+      },
+
+      ago (match) {
+        return moment.unix(match.started_at).fromNow()
+      },
+
+      sortBy (key) {
+        const fn = {
+          kd: p => p.kills / p.deaths,
+        }
+
+        if (this.sortKey === key) {
+          this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc'
+        } else {
+          this.sortKey = key
+          this.sortDirection = 'desc'
+          this.sortFn = fn.hasOwnProperty(key) ? fn[key] : key
+        }
       }
     },
 
@@ -153,6 +236,14 @@
 
       player() {
         return this.match.data.players[this.current]
+      },
+
+      players() {
+        const players = Object.entries(this.match.data.players).map(([uid, player]) => {
+          return { uid, ...player }
+        })
+
+        return orderBy(players, this.sortFn, this.sortDirection)
       }
     },
   }

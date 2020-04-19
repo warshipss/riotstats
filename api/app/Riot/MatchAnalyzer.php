@@ -149,6 +149,10 @@ class MatchAnalyzer
      */
     protected function getTotalDamage($original)
     {
+        if ($original->roundDamage === null) {
+            return 0;
+        }
+
         return array_sum(array_map(function ($dmg) {
             return $dmg->damage === 999 ? 0 : $dmg->damage;
         }, $original->roundDamage));

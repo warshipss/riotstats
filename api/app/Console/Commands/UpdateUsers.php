@@ -2,15 +2,15 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\UpdatePlayer;
 use App\Models\User;
+use App\Jobs\UpdatePlayer;
 use App\Riot\TokenFeatures;
-use App\Jobs\ObtainNewToken;
 use Illuminate\Console\Command;
+use App\Features\ServiceSettings;
 
 class UpdateUsers extends Command
 {
-    use TokenFeatures;
+    use TokenFeatures, ServiceSettings;
 
     /**
      * The name and signature of the console command.
@@ -43,7 +43,12 @@ class UpdateUsers extends Command
      */
     public function handle()
     {
+        if ($this->getSetting('valorant.fetch_users') !== 'true') {
+            return;
+        }
+
         $users = User::whereNull('fetched_at')
+            ->whereNull('queued_at')
             ->limit(15)
             ->get();
 

@@ -7,6 +7,7 @@ use App\Models\Match;
 use App\Riot\Valorant;
 use App\Riot\TokenFeatures;
 use Illuminate\Bus\Queueable;
+use App\Features\ServiceSettings;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,7 +15,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class FetchMatch implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, TokenFeatures;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, TokenFeatures, ServiceSettings;
 
     /**
      * @var Match
@@ -43,8 +44,6 @@ class FetchMatch implements ShouldQueue
      */
     public function handle()
     {
-        usleep(500e3);
-
         /**
          * @var Valorant $api
          */
@@ -67,6 +66,12 @@ class FetchMatch implements ShouldQueue
 
         if ($this->flagNewUsers) {
             FindNames::dispatch();
+        }
+
+        $t = (int) $this->getSetting('valorant.timeout', 0);
+
+        if ($t > 0) {
+            usleep($t * 1e3);
         }
     }
 
