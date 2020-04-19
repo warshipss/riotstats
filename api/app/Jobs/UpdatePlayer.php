@@ -8,6 +8,7 @@ use App\Models\Match;
 use App\Riot\Valorant;
 use App\Riot\TokenFeatures;
 use Illuminate\Bus\Queueable;
+use App\Features\ServiceSettings;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -15,7 +16,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class UpdatePlayer implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, TokenFeatures;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, TokenFeatures, ServiceSettings;
 
     /**
      * @var User
@@ -41,16 +42,15 @@ class UpdatePlayer implements ShouldQueue
      */
     public function handle()
     {
+        $this->user->queued_at = Carbon::now();
+        $this->user->save();
+
         /**
          * @var Valorant $api
          */
         $api = app(Valorant::class);
 
         $token = $this->getToken();
-
-        if (! $token) {
-            return $this->release(5);
-        }
 
         $api->setToken($token);
 
@@ -83,9 +83,14 @@ class UpdatePlayer implements ShouldQueue
 
             $offset += $perPage;
 
-            usleep(500e3);
+            $t = (int) $this->getSetting('valorant.timeout', 0);
+
+            if ($t > 0) {
+                usleep($t * 1e3);
+            }
         }
 
+        $this->user->queued_at = null;
         $this->user->fetched_at = Carbon::now();
         $this->user->save();
     }

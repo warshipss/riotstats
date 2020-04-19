@@ -15,7 +15,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $dates = ['fetched_at', 'processed_at'];
+    protected $dates = ['queued_at', 'fetched_at', 'processed_at'];
 
     /**
      * The attributes that are mass assignable.

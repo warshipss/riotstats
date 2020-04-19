@@ -19,6 +19,7 @@
     "bootstrap-vue": "^2.0.0",
     "cookie": "^0.4.0",
     "lodash": "^4.17.15",
+    "moment": "^2.24.0",
     "node-sass": "^4.13.1",
     "nuxt": "^2.0.0",
     "nuxt-i18n": "^6.9.1",

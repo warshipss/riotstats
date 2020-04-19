@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Match extends JsonResource
@@ -17,6 +18,7 @@ class Match extends JsonResource
         return [
             'uid' => $this->uid,
             'data' => $this->data,
+            'started_at' => $this->started_at->timestamp,
             'users' => ShortProfile::collection($this->users),
         ];
     }

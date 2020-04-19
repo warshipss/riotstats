@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Match;
-use App\Riot\Valorant;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Jobs\UpdatePlayer;
@@ -39,13 +37,9 @@ class PlayerController extends Controller
      */
     protected function getProfile($nickname, $tag, $page)
     {
-        $user = User::where('nickname', trim($nickname))
-            ->where('tag', trim($tag))
+        $user = User::where('nickname', $nickname)
+            ->where('tag', $tag)
             ->first();
-
-        $matches = $user->getMatches($page);
-
-        $user->setRelation('matches', $matches);
 
         if (! $user)
         {
@@ -53,6 +47,10 @@ class PlayerController extends Controller
 
             return ['error' => 'SEARCHING_FOR_USER'];
         }
+
+        $matches = $user->getMatches($page);
+
+        $user->setRelation('matches', $matches);
 
         if (! $user->fetched_at || $user->fetched_at->lt(Carbon::now()->subHours(12))) {
             UpdatePlayer::dispatch($user);

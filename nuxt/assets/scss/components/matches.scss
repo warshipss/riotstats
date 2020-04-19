@@ -9,6 +9,8 @@
 }
 
 .match {
+  $n: &;
+
   &__result {
     text-align: center;
   }
@@ -44,31 +46,58 @@
     }
   }
 
-  &__trigger {
-    @include clip();
+  &__details {
+    background: #fff;
+    border-radius: 0;
+    margin-bottom: 1rem;
 
+    border: 1px solid rgba(15, 25, 35, .5);
+  }
+
+  &__details-btn {
+    width: 2rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background: #0f1923;
+    justify-content: center;
+  }
+
+  &__details-img {
+    width: 2rem;
+    height: 2rem;
+    transform: rotate(90deg);
+    transition: transform 500ms ease;
+  }
+
+  &__trigger {
+    padding: 0;
     width: 100%;
     z-index: 1;
-    padding: 0;
     height: 5rem;
     display: flex;
     overflow: hidden;
     position: relative;
-    margin-bottom: 1rem;
     align-items: center;
     flex-direction: row;
-    padding-right: 8rem;
     justify-content: space-between;
     border: 1px solid rgba(15, 25, 35, .5);
-    box-shadow: 0 3px 7px rgba(14, 8, 18, .44);
     transition: height .3s ease-in-out,border-color .3s ease-in-out;
 
     &:not(:last-of-type) {
-      //border-bottom: none;
+      border-bottom: none;
+    }
+
+    &:not(.collapsed) {
+      #{$n}__details-img {
+        transform: rotate(-90deg);
+      }
     }
 
     &:hover {
+      color: $body-bg;
       cursor: pointer;
+      border-color: #0f1923;
 
       &:after {
         transform: translateX(0) skew(-10deg);
@@ -85,36 +114,35 @@
       height: 100%;
       display: block;
       position: absolute;
-      background: darken($body-bg, 3%);
+      background: #0f1923;
       transition: transform .3s ease-out;
       transform: translateX(-100%) skew(-10deg);
     }
 
     &_victory {
+      &:hover {
+        border-color: #ff4655;
+      }
+
       &:after {
         background: #ff4655;
       }
 
-      &:hover {
-        color: $body-bg;
-        border-color: #ff4655;
+      #{$n}__details-btn {
+        background: #ff4655;
       }
     }
   }
 
-  &__squad-size {
-    right: 1rem;
-    bottom: .5rem;
-    font-size: .75rem;
-    position: absolute;
-    text-transform: uppercase;
+  &__meta {
+    display: flex;
+    margin-right: 1rem;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
-  &__map {
-    right: 1rem;
-    top: .5rem;
+  &__meta-item {
     font-size: .75rem;
-    position: absolute;
     text-transform: uppercase;
   }
 }
