@@ -7,23 +7,6 @@ use App\Models\Setting;
 trait ServiceSettings
 {
     /**
-     * @var array
-     */
-    protected $settings;
-
-    /**
-     * ServiceSettings constructor.
-     *
-     * @throws \Exception
-     */
-    public function __construct()
-    {
-        $this->settings = cache()->remember('settings', 60, function () {
-            return $this->loadFromDatabase();
-        });
-    }
-
-    /**
      * @param $key
      * @param null $default
      *
@@ -31,7 +14,11 @@ trait ServiceSettings
      */
     public function getSetting($key, $default = null)
     {
-        return isset($this->settings[$key]) ? $this->settings[$key] : $default;
+        $settings = cache()->remember('settings', 60, function () {
+            return $this->loadFromDatabase();
+        });
+
+        return isset($settings[$key]) ? $settings[$key] : $default;
     }
 
     /**

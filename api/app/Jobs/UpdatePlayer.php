@@ -58,6 +58,7 @@ class UpdatePlayer implements ShouldQueue
         $offset = 0;
         $perPage = 20;
 
+        $time = microtime(true);
         while (! $flag)
         {
             $matches = $api->getMatchHistory($this->user->uid, $offset, $offset + $perPage);
@@ -89,6 +90,8 @@ class UpdatePlayer implements ShouldQueue
                 usleep($t * 1e3);
             }
         }
+
+        app('log')->info('while took: ' . (round(microtime(true) - $time, 3)));
 
         $this->user->queued_at = null;
         $this->user->fetched_at = Carbon::now();
