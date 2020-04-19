@@ -58,7 +58,10 @@ class UpdatePlayer implements ShouldQueue
         $offset = 0;
         $perPage = 20;
 
+        $dispatches = [];
         $time = microtime(true);
+        $count = $this->user->matches()->count();
+
         while (! $flag)
         {
             $matches = $api->getMatchHistory($this->user->uid, $offset, $offset + $perPage);
@@ -72,13 +75,15 @@ class UpdatePlayer implements ShouldQueue
                     'started_at' => Carbon::createFromTimestamp(floor($match->GameStartTime / 1e3)),
                 ]);
 
-                if ($record->wasRecentlyCreated) {
-                    FetchMatch::dispatch($record);
+                if ($record->wasRecentlyCreated)
+                {
+                    $count++;
+                    $dispatches[] = $record;
                 }
             }
 
             // Last page reached or no new matches
-            if ($matches->EndIndex === $matches->Total || $matches->Total === $this->user->matches()->count()) {
+            if ($matches->EndIndex === $matches->Total || $matches->Total === $count) {
                 $flag = 1;
             }
 
@@ -92,6 +97,10 @@ class UpdatePlayer implements ShouldQueue
         }
 
         app('log')->info('while took: ' . (round(microtime(true) - $time, 3)));
+
+        foreach ($dispatches as $dispatch) {
+            FetchMatch::dispatch($dispatch);
+        }
 
         $this->user->queued_at = null;
         $this->user->fetched_at = Carbon::now();
