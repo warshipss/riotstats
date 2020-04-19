@@ -89,7 +89,12 @@ class FetchMatch implements ShouldQueue
 
         foreach ($uids as $uid)
         {
-            $user = User::firstOrCreate(compact('uid'));
+            $user = User::uuid($uid)
+                ->first();
+
+            if (! $user) {
+                $user = User::create(compact('uid'));
+            }
 
             if ($user->wasRecentlyCreated) {
                 $this->flagNewUsers = true;

@@ -58,31 +58,33 @@ class UpdatePlayer implements ShouldQueue
         $offset = 0;
         $perPage = 20;
 
-        $dispatches = [];
         $count = $this->user->matches()->count();
 
         while (! $flag)
         {
             $matches = $api->getMatchHistory($this->user->uid, $offset, $offset + $perPage);
 
-            $time = microtime(true);
             foreach ($matches->History as $match)
             {
-                $record = Match::firstOrCreate([
-                    'game_id' => 1,
-                    'uid' => $match->MatchID,
-                ], [
-                    'started_at' => Carbon::createFromTimestamp(floor($match->GameStartTime / 1e3)),
-                ]);
+                $record = Match::uuid($match->MatchID)
+                    ->where('game_id', 1)
+                    ->first();
+
+                if (! $record)
+                {
+                    $record = Match::create([
+                        'game_id' => 1,
+                        'uid' => $match->MatchID,
+                        'started_at' => Carbon::createFromTimestamp(floor($match->GameStartTime / 1e3)),
+                    ]);
+                }
 
                 if ($record->wasRecentlyCreated)
                 {
                     $count++;
-                    $dispatches[] = $record;
+                    FetchMatch::dispatch($record);
                 }
             }
-
-            app('log')->info('foreach took: ' . (round(microtime(true) - $time, 3)));
 
             // Last page reached or no new matches
             if ($matches->EndIndex === $matches->Total || $matches->Total === $count) {
@@ -96,12 +98,6 @@ class UpdatePlayer implements ShouldQueue
             if ($t > 0) {
                 usleep($t * 1e3);
             }
-        }
-
-        app('log')->info('while took: ' . (round(microtime(true) - $time, 3)));
-
-        foreach ($dispatches as $dispatch) {
-            FetchMatch::dispatch($dispatch);
         }
 
         $this->user->queued_at = null;
