@@ -59,13 +59,13 @@ class UpdatePlayer implements ShouldQueue
         $perPage = 20;
 
         $dispatches = [];
-        $time = microtime(true);
         $count = $this->user->matches()->count();
 
         while (! $flag)
         {
             $matches = $api->getMatchHistory($this->user->uid, $offset, $offset + $perPage);
 
+            $time = microtime(true);
             foreach ($matches->History as $match)
             {
                 $record = Match::firstOrCreate([
@@ -81,6 +81,8 @@ class UpdatePlayer implements ShouldQueue
                     $dispatches[] = $record;
                 }
             }
+
+            app('log')->info('foreach took: ' . (round(microtime(true) - $time, 3)));
 
             // Last page reached or no new matches
             if ($matches->EndIndex === $matches->Total || $matches->Total === $count) {
