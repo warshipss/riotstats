@@ -22,7 +22,7 @@ class CreateMatchesTable extends Migration
                 ->on('games')
                 ->cascadeOnDelete();
 
-            $table->string('uid');
+            $table->binary('uid');
             $table->json('data');
             $table->longText('original')->nullable();
 
