@@ -31,13 +31,13 @@ trait ServiceSettings
      */
     public function getSetting($key, $default = null)
     {
-        return isset($this->config[$key]) ? $this->config[$key] : $default;
+        return isset($this->settings[$key]) ? $this->settings[$key] : $default;
     }
 
     /**
      * @return array
      */
-    public function loadFromDatabase()
+    private function loadFromDatabase()
     {
         $settings = Setting::all();
 
