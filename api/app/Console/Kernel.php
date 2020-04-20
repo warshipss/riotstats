@@ -27,10 +27,13 @@ class Kernel extends ConsoleKernel
         $schedule->command('check:token')
             ->everyMinute();
 
+        $schedule->command('sitemap:generate')
+            ->daily();
+
         if (config('app.env') !== 'dev')
         {
-//            $schedule->command('update:users')
-//                ->everyFiveMinutes();
+            $schedule->command('update:users')
+                ->everyFiveMinutes();
         }
     }
 

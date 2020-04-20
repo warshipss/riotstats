@@ -70,6 +70,7 @@ services:
       - backend
     volumes:
       - ./api:/app
+      - ./nuxt/static:/app/storage/app/sitemap
 
   queue:
     build:
