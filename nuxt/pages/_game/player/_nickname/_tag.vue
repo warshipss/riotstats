@@ -20,6 +20,17 @@
   {
     components: { Match },
 
+    head() {
+      return {
+        title: this.title,
+
+        meta: [
+          { property: 'og:title', content: this.title },
+          { property: 'og:description', content: '' },
+        ]
+      }
+    },
+
     async asyncData({ app, params }) {
       const { data } = await app.$axios.get('/player/profile', { params })
 
@@ -28,9 +39,9 @@
       }
     },
 
-    head() {
-      return {
-        title: this.profile.nickname + ' #' + this.profile.tag + ' Valorant statistics',
+    computed: {
+      title () {
+        return this.profile.nickname + ' #' + this.profile.tag + ' Valorant statistics'
       }
     }
   }
