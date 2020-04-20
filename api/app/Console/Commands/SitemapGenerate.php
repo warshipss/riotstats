@@ -50,7 +50,6 @@ class SitemapGenerate extends Command
     {
         $chunkSize = count($this->locales) + 1;
         $chunks = User::select('tag', 'nickname', 'updated_at')
-            ->limit(50e3)
             ->get()
             ->chunk(floor(50e3 / $chunkSize));
 
