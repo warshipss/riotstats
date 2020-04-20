@@ -136,11 +136,7 @@ class Valorant
             $options['json'] = $data;
         }
 
-        $time = microtime(true);
-
         $response = $this->http->request($method, $path, $options)->getBody();
-
-        app('log')->info(mb_strtoupper($method) . ' ' . $path . ' took ' . round(microtime(true) - $time, 3));
 
         return json_decode((string) $response);
     }
