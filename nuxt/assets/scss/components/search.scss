@@ -1,35 +1,49 @@
-.search {
-  @include clip();
+.vs {
+  &__dropdown-toggle {
+    border: none;
+    padding: 0;
+    background: #fff;
+    border-radius: 0;
+  }
 
-  padding: 2rem;
-  max-width: 20rem;
-  background: #0f1923;
+  &__search {
+    margin: 0;
+    border: none;
+    font-size: 1rem;
+    height: 3.75rem;
+    border-radius: 0;
+    background: #fff;
+    font-weight: bold;
+    padding: 0 3.5rem;
+    color: $body-color;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+
+      &::placeholder {
+        opacity: 0;
+      }
+    }
+
+    &::placeholder {
+      opacity: 1;
+      font-weight: 500;
+      font-size: .875rem;
+      text-align: center;
+      text-transform: uppercase;
+      transition: opacity 200ms ease;
+    }
+  }
+}
+
+.search {
+  width: 100%;
+  max-width: 40rem;
 
   &__title {
     color: $body-bg;
     text-align: center;
-  }
-
-  &__input {
-    border: none;
-    color: $body-bg;
-    font-size: 1rem;
-    padding: .5rem 0;
-    border-radius: 0;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    background: $body-color;
-
-    &:focus {
-      outline: none;
-      color: $body-bg;
-      box-shadow: none;
-      background: $body-color;
-    }
-
-    &::placeholder {
-      font-weight: 500;
-    }
   }
 
   &__button {

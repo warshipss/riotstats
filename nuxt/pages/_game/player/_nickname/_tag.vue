@@ -1,19 +1,124 @@
 <template>
   <div class="profile">
-    <h1 class="profile__nickname">{{ profile.nickname }} #{{ profile.tag }}</h1>
-    <h2>{{ $t('Matches') }}</h2>
+    <h1 class="profile__nickname">{{ profileTitle }}</h1>
 
-    <div class="matches">
-      <match :match="match" :current="profile.uid" :key="match.uid" v-for="match of profile.matches" />
-    </div>
+    <h3 v-if="error">{{ error }}</h3>
 
-    <a href="#" class="btn btn-primary">
-      {{ $t('Load more') }}
-    </a>
+    <template v-else>
+      <div class="row">
+        <div class="col col-md-4">
+          <div class="profile__card">
+            <h2 class="profile__card-title">{{ $t('Overall statistics') }}</h2>
+
+            <div class="profile__stats">
+              <div class="stat">
+                <div class="stat__value">{{ profile.stats.matches }}</div>
+                <div class="stat__label">Matches played</div>
+              </div>
+
+              <div class="stat">
+                <div class="stat__value">{{ (profile.stats.summary.wins / profile.stats.summary.matches * 100).toFixed(1) }}%</div>
+                <div class="stat__label">Winrate</div>
+              </div>
+
+              <div class="stat">
+                <div class="stat__value">37 / 11 / 7</div>
+                <div class="stat__label">Best KDA</div>
+              </div>
+            </div>
+
+            <div class="profile__stats">
+              <div class="stat">
+                <div class="stat__value">{{ Math.floor(profile.stats.summary.score / profile.stats.summary.rounds) }}</div>
+                <div class="stat__label">Avg. combat score</div>
+              </div>
+
+              <div class="stat">
+                <div class="stat__value">{{ Math.floor(profile.stats.summary.damage / profile.stats.summary.rounds) }}</div>
+                <div class="stat__label">Avg. damage</div>
+              </div>
+
+              <div class="stat">
+                <div class="stat__value">{{ (profile.stats.summary.kills / profile.stats.summary.deaths).toFixed(2) }}</div>
+                <div class="stat__label">Kills / Deaths ratio</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col col-md-4">
+          <div class="profile__card">
+            <h2 class="profile__card-title">{{ $t('Last 20 matches') }}</h2>
+
+            <div class="profile__stats">
+              <div class="stat">
+                <div class="stat__value">{{ Math.floor(last.score / last.rounds) }}</div>
+                <div class="stat__label">ACS</div>
+              </div>
+
+              <div class="stat">
+                <div class="stat__value">{{ Math.floor(last.damage / last.rounds) }}</div>
+                <div class="stat__label">ADR</div>
+              </div>
+
+              <div class="stat">
+                <div class="stat__value">{{ (last.kills / last.deaths).toFixed(2) }}</div>
+                <div class="stat__label">K/D</div>
+              </div>
+
+              <div class="stat">
+                <div class="stat__value">{{ (last.wins / last.matches * 100).toFixed(1) }}%</div>
+                <div class="stat__label">Winrate</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col col-md-4">
+          <div class="profile__card profile__card_agent">
+            <img :src="$agentImage(bestAgent.uid, 'profile')" class="profile__agent" />
+            <h2 class="profile__card-title">{{ $t('Best agent') }} &dash; {{ $getAgent(bestAgent.uid).slug }}</h2>
+
+            <div class="profile__stats">
+              <div class="stat">
+                <div class="stat__value">{{ Math.floor(bestAgent.stats.score / bestAgent.stats.rounds) }}</div>
+                <div class="stat__label">ACS</div>
+              </div>
+
+              <div class="stat">
+                <div class="stat__value">{{ Math.floor(bestAgent.stats.damage / bestAgent.stats.rounds) }}</div>
+                <div class="stat__label">ADR</div>
+              </div>
+
+              <div class="stat">
+                <div class="stat__value">{{ (bestAgent.stats.kills / bestAgent.stats.deaths).toFixed(2) }}</div>
+                <div class="stat__label">K/D</div>
+              </div>
+
+              <div class="stat">
+                <div class="stat__value">66.7%</div>
+                <div class="stat__label">Winrate</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>{{ $t('Matches') }}</h2>
+
+      <div class="matches">
+        <match :match="match" :current="profile.uid" :key="match.uid" v-for="match of profile.matches" />
+      </div>
+
+      <a href="#" class="matches matches__more" @click.prevent="loadMore" v-if="total > page * perPage">
+        {{ $t('Load more') }}
+      </a>
+    </template>
   </div>
 </template>
 
 <script>
+  import { orderBy } from 'lodash'
   import Match from '~/components/match'
 
   export default
@@ -34,14 +139,52 @@
     async asyncData({ app, params }) {
       const { data } = await app.$axios.get('/player/profile', { params })
 
+      if (data.hasOwnProperty('error')) {
+        return data
+      }
+
       return {
         profile: data.data,
       }
     },
 
+    data() {
+      return {
+        page: 1,
+        perPage: 20,
+        error: false,
+      }
+    },
+
     computed: {
+      profileTitle () {
+        return this.$route.params.nickname + ' #' + this.$route.params.tag
+      },
+
       title () {
-        return this.profile.nickname + ' #' + this.profile.tag + ' Valorant statistics'
+        return this.profileTitle + ' Valorant statistics'
+      },
+
+      total () {
+        return this.profile.stats.matches
+      },
+
+      last () {
+        return this.profile.stats.last20
+      },
+
+      bestAgent () {
+        const byScore = orderBy(Object.entries(this.profile.stats.byAgent), e => e[1].score / e[1].rounds, 'desc')
+
+        if (byScore.length)
+        {
+          return {
+            uid: byScore[0][0],
+            stats: byScore[0][1],
+          }
+        }
+
+        return {}
       }
     }
   }

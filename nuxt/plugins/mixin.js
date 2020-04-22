@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { mapState } from 'vuex'
 
 export default Vue.mixin({
   methods: {
@@ -17,15 +18,49 @@ export default Vue.mixin({
       })
     },
 
-    $gamePath (game, path, params = {}) {
+    $gamePath (game, path = '', params = {}) {
       if (! game) {
         game = this.$route.params.game
+      }
+
+      if (path !== '') {
+        path = '-' + path
       }
 
       return this.localePath({
         name: 'game' + path,
         params: { game, ...params }
       })
+    },
+
+    $getAgent (uid) {
+      const agents = this.resources.filter(r => r.type === 'agent' && r.uid === uid)
+
+      if (agents.length) {
+        return agents[0].data
+      }
+
+      return {}
+    },
+
+    $agentImage (uid, size = 'sm') {
+      const slug = this.$getAgent(uid).slug
+
+      return `/img/agents/${size}/${slug}.png`
+    },
+
+    $getMap (uid) {
+      const maps = this.resources.filter(r => r.type === 'map' && r.uid === uid)
+
+      if (maps.length) {
+        return maps[0].data
+      }
+
+      return {}
     }
+  },
+
+  computed: {
+    ...mapState(['resources']),
   }
 })

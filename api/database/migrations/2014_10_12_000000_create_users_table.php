@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('nickname')->nullable();
             $table->string('tag')->nullable();
 
+            $table->json('stats')->nullable();
             $table->timestamp('queued_at')->nullable();
             $table->timestamp('fetched_at')->nullable();
             $table->timestamp('processed_at')->nullable();

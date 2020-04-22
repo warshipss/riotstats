@@ -10,31 +10,6 @@ class MatchAnalyzer
     protected $original;
 
     /**
-     * @var string[]
-     */
-    protected $maps = [
-        '/Game/Maps/Triad/Triad' => 'haven',
-        '/Game/Maps/Bonsai/Bonsai' => 'split',
-        '/Game/Maps/Duality/Duality' => 'bind',
-    ];
-
-    /**
-     * @var string[]
-     */
-    protected $agents = [
-        '5f8d3a7f-467b-97f3-062c-13acf203c006' => 'breach',
-        'f94c3b30-42be-e959-889c-5aa313dba261' => 'raze',
-        '117ed9e3-49f3-6512-3ccf-0cada7e3823b' => 'cypher',
-        '320b2a48-4d9b-a075-30f1-1f93a9b638fa' => 'sova',
-        '707eab51-4836-f488-046a-cda6bf494859' => 'viper',
-        'eb93336a-449b-9c1b-0a54-a891f7921d69' => 'phoenix',
-        '9f0d8ba9-4140-b941-57d3-a7ad57c6b417' => 'brimstone',
-        '569fdd95-4d10-43ab-ca70-79becc718b46' => 'sage',
-        '8e253930-4c05-31dd-1b6c-968525494517' => 'omen',
-        'add6443a-41bd-e414-f6ad-e58d267f4e95' => 'jett',
-    ];
-
-    /**
      * MatchAnalyzer constructor.
      *
      * @param $original
@@ -44,61 +19,70 @@ class MatchAnalyzer
         $this->original = json_decode($original);
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
+        $players = $this->getPlayers();
+
         return [
-            'map' => $this->getMap(),
-            'score' => $this->getScore(),
-            'players' => $this->getPlayers(),
+            'players' => $players,
+            'teams' => $this->getTeams(),
+            'versus' => $this->getVersus(),
+            'map' => $this->original->matchInfo->mapId,
+            'ranked' => $this->original->matchInfo->isRanked,
+            'completed' => $this->original->matchInfo->isCompleted,
+            'type' => $this->original->matchInfo->provisioningFlowID === 'Matchmaking' ? 'matchmaking' : 'custom',
         ];
     }
 
     /**
-     * @return mixed|string
+     * @return array
      */
-    protected function getMap()
+    protected function getVersus()
     {
-        $map = $this->original->matchInfo->mapId;
+        $versus = [];
 
-        if (isset($this->maps[$map])) {
-            return $this->maps[$map];
-        }
-
-        $split = explode('/', $map);
-
-        return $split[count($split) - 1];
-    }
-
-    /**
-     * @return \stdClass
-     */
-    protected function getScore()
-    {
-        $teams = new \stdClass;
-
-        foreach ($this->original->roundResults as $round)
+        foreach ($this->original->kills as $kill)
         {
-            $winner = $round->winningTeam;
-
-            if (isset($teams->{$winner})) {
-                $teams->{$winner}++;
-            } else {
-                $teams->{$winner} = 1;
+            if (! isset($versus[$kill->killer])) {
+                $versus[$kill->killer] = [];
             }
+
+            if (! isset($versus[$kill->killer][$kill->victim])) {
+                $versus[$kill->killer][$kill->victim] = 0;
+            }
+
+            $versus[$kill->killer][$kill->victim]++;
         }
 
-        return $teams;
+        return $versus;
     }
 
     /**
      * @return \stdClass
      */
-    protected function getPlayers()
+    protected function getTeams()
     {
-        $players = new \stdClass;
+        $result = new \stdClass;
+
+        foreach ($this->original->teams as $team) {
+            $result->{$team->teamId} = $team;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPlayers(): array
+    {
+        $players = [];
 
         foreach ($this->original->players as $player) {
-            $players->{$player->subject} = $this->getPlayer($player);
+            $players[$player->subject] = $this->getPlayer($player);
         }
 
         return $players;
@@ -106,6 +90,7 @@ class MatchAnalyzer
 
     /**
      * @param $original
+     *
      * @return array
      */
     protected function getPlayer($original)
@@ -116,30 +101,70 @@ class MatchAnalyzer
             'damage' => $damage,
             'team' => $original->teamId,
             'party' => $original->partyId,
+            'agent' => $original->characterId,
             'score' => $original->stats->score,
             'kills' => $original->stats->kills,
             'deaths' => $original->stats->deaths,
-            'agent' => $this->getAgent($original),
+            'casts' => $this->getCasts($original),
             'assists' => $original->stats->assists,
             'rounds' => $original->stats->roundsPlayed,
+            'weapons' => $this->getByWeapon($original->subject),
             'adr' => floor($damage / $original->stats->roundsPlayed),
         ];
     }
 
     /**
-     * @param $player
+     * @param $killer
      *
-     * @return mixed|string
+     * @return array
      */
-    protected function getAgent($player)
+    protected function getByWeapon($killer)
     {
-        $agent = $player->characterId;
+        $weapons = [];
 
-        if (isset($this->agents[$agent])) {
-            return $this->agents[$agent];
+        foreach ($this->original->kills as $kill)
+        {
+            if ($kill->killer !== $killer) {
+                continue;
+            }
+
+            $item = mb_strtolower($kill->finishingDamage->damageItem);
+
+            if (! isset($weapons[$item])) {
+                $weapons[$item] = 0;
+            }
+
+            $weapons[$item]++;
         }
 
-        return explode('-', $agent)[0];
+        return $weapons;
+    }
+
+    /**
+     * @param $original
+     *
+     * @return mixed
+     */
+    protected function getCasts($original)
+    {
+        if (! isset($original->stats->abilityCasts))
+        {
+            return [
+                'grenade' => 0,
+                'ability1' => 0,
+                'ability2' => 0,
+                'ultimate' => 0,
+            ];
+        }
+
+        $result = [];
+        $casts = (array) $original->stats->abilityCasts;
+
+        foreach ($casts as $key => $value) {
+            $result[str_replace('Casts', '', $key)] = (int) $value;
+        }
+
+        return $result;
     }
 
     /**

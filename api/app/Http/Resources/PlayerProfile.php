@@ -17,9 +17,10 @@ class PlayerProfile extends JsonResource
         return [
             'uid' => $this->uid,
             'tag' => $this->tag,
+            'stats' => $this->stats,
             'nickname' => $this->nickname,
             'updated_at' => $this->updated_at,
-            'matches' => $this->whenLoaded('matches', Match::collection($this->matches)),
+            'matches' => Match::collection($this->whenLoaded('matches')),
         ];
     }
 }

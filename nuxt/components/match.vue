@@ -1,36 +1,43 @@
 <template>
   <div class="match">
-    <div v-b-toggle="match.uid" :class="['match__trigger', { match__trigger_victory: relativeMatchResult === 'victory' }]">
-      <img :src="agentImage(player.agent)" class="match__agent" />
+    <div v-b-toggle="match.uid" :class="'match__trigger match__trigger_' + matchClass">
+      <img :src="$agentImage(player.agent)" class="match__agent" />
 
-      <div class="stat">
-        <div class="stat__value">{{ Math.floor(player.score / player.rounds) }}</div>
-        <div class="stat__label">Avg. Combat Score</div>
-      </div>
-
-      <div class="match__result">
-        <div class="match__result-label">{{ $t(relativeMatchResult) }}</div>
-        <div class="match__score">
-          {{ score.home }} &dash; {{ score.away }}
-        </div>
-      </div>
-
-      <div class="stat">
-        <div class="stat__value">{{ player.kills + ' / ' + player.deaths + ' / ' + player.assists }}</div>
-        <div class="stat__label">KDA</div>
-      </div>
-
-      <div class="match__meta">
-        <div class="match__meta-item">
-          <i class="icon-map" /> Map: {{ match.data.map }}
+      <div class="row">
+        <div class="col col-md-2 stat">
+          <div class="stat__value">{{ Math.floor(player.score / player.rounds) }}</div>
+          <div class="stat__label">{{ $t('Combat score') }}</div>
         </div>
 
-        <div class="match__meta-item">
-          <i class="icon-clock" /> {{ ago(match) }}
+        <div class="col col-md-2 stat">
+          <div class="stat__value">{{ Math.floor(player.damage / player.rounds) }}</div>
+          <div class="stat__label">{{ $t('Avg. damage') }}</div>
         </div>
 
-        <div class="match__meta-item" v-if="squadSize > 1">
-          <i class="icon-users-outline" /> Squad size: {{ squadSize }}
+        <div class="col col-md-3 match__result">
+          <div class="match__result-label">{{ $t(matchClass) }}</div>
+          <div class="match__score">
+            {{ score.home }} &dash; {{ score.away }}
+          </div>
+        </div>
+
+        <div class="col col-md-2 stat">
+          <div class="stat__value">{{ player.kills + ' / ' + player.deaths + ' / ' + player.assists }}</div>
+          <div class="stat__label">KDA</div>
+        </div>
+
+        <div class="col col-md-3 match__meta">
+          <div class="match__meta-item">
+            <i class="icon-map" /> {{ $t('Map') }}: {{ $getMap(match.stats.map).slug }}
+          </div>
+
+          <div class="match__meta-item">
+            <i class="icon-clock" /> {{ ago(match) }}
+          </div>
+
+          <div class="match__meta-item" v-if="squadSize > 1 && matchClass !== 'custom'">
+            <i class="icon-users-outline" /> {{ $t('Squad size') }}: {{ squadSize }}
+          </div>
         </div>
       </div>
 
@@ -45,7 +52,7 @@
           <thead>
           <tr class="match-table__groups">
             <th colspan="2"></th>
-            <th colspan="6">Basic</th>
+            <th colspan="7">Basic</th>
             <th colspan="3">Multikills</th>
             <th colspan="3">Entry</th>
           </tr>
@@ -66,6 +73,10 @@
             <th>
               <a href="#" class="match-table__stat-name" :title="$t('Kills / Deaths ratio')" v-b-tooltip.hover
                  @click.prevent="sortBy('kd')">K/D</a>
+            </th>
+            <th>
+              <a href="#" class="match-table__stat-name" :title="$t('Kills / Rounds ratio')" v-b-tooltip.hover
+                 @click.prevent="sortBy('kr')">K/R</a>
             </th>
             <th>
               <a href="#" class="match-table__stat-name" :title="$t('Average combat score per round')" v-b-tooltip.hover
@@ -105,7 +116,7 @@
           <tbody>
           <tr :class="{ 'match-table__even': isEven(player) }" :key="player.uid" v-for="(player, i) of players">
             <td class="match__agent-cell">
-              <img :src="agentImage(player.agent)" class="match__agent match__agent_small" />
+              <img :src="$agentImage(player.agent)" class="match__agent match__agent_small" />
             </td>
             <td :style="{ borderLeft: '.2rem solid ' + parties[player.party] }">
               <nuxt-link :to="$playerPath(users[player.uid].nickname, users[player.uid].tag)">
@@ -117,6 +128,7 @@
             <td class="match-table__stat-value">{{ player.deaths }}</td>
             <td class="match-table__stat-value">{{ player.assists }}</td>
             <td class="match-table__stat-value">{{ (player.kills / player.deaths).toFixed(2) }}</td>
+            <td class="match-table__stat-value">{{ (player.kills / player.rounds).toFixed(2) }}</td>
             <td class="match-table__stat-value">{{ Math.floor(player.score / player.rounds) }}</td>
             <td class="match-table__stat-value">{{ Math.floor(player.damage / player.rounds) }}</td>
 
@@ -141,7 +153,7 @@
 
 <script>
   import moment from 'moment'
-  import { orderBy, keyBy, uniq } from 'lodash'
+  import { orderBy, keyBy, groupBy } from 'lodash'
 
   export default
   {
@@ -159,10 +171,6 @@
     },
 
     methods: {
-      agentImage (agent) {
-        return '/img/agents/' + agent + '/sm.png'
-      },
-
       isEven (player) {
         return player.team === 'Blue'
       },
@@ -174,6 +182,7 @@
       sortBy (key) {
         const fn = {
           kd: p => p.kills / p.deaths,
+          kr: p => p.kills / p.rounds,
         }
 
         if (this.sortKey === key) {
@@ -183,40 +192,54 @@
           this.sortDirection = 'desc'
           this.sortFn = fn.hasOwnProperty(key) ? fn[key] : key
         }
-      }
+      },
+
+      fromEntries(arr) {
+        // TODO: Replace to Object.fromEntries()
+        let result = {}
+        arr.map(i => result[i[0]] = i[1])
+
+        return result
+      },
     },
 
     computed: {
       parties()
       {
-        const colors = ['#1B1464', '#FFC312', '#12CBC4', '#ED4C67', '#A3CB38', '#1289A7', '#D980FA', '#B53471']
-        const parties = uniq(Object.values(this.match.data.players).map(p => p.party))
+        const colors = ['#ff4655', '#0f1923', '#3ae374', '#17c0eb']
+        const parties = groupBy(Object.values(this.match.stats.players), 'party')
 
-        // TODO: Replace to Object.fromEntries()
-        let result = {}
-        parties.map((p, i) => result[p] = colors[i])
+        let i = 0
 
-        return result
+        const assignedColors = Object.entries(parties).map(([party, players]) => {
+          if (players.length > 1) {
+            return [party, colors[i++]]
+          }
+
+          return [party, 'transparent']
+        })
+
+        return this.fromEntries(assignedColors)
       },
 
       score() {
-        const scores = Object.entries(this.match.data.score).map(([k, v]) => {
+        const scores = Object.entries(this.match.stats.teams).map(([k, v]) => {
           if (k === this.player.team) {
-            return ['home', v]
+            return ['home', v.roundsWon]
           }
 
-          return ['away', v]
+          return ['away', v.roundsWon]
         })
 
-        // TODO: Replace to Object.fromEntries()
-        let result = {}
-        scores.map(score => result[score[0]] = score[1])
-
-        return result
+        return this.fromEntries(scores)
       },
 
-      relativeMatchResult()
+      matchClass()
       {
+        if (this.match.stats.type === 'custom') {
+          return 'custom'
+        }
+
         if (this.score.home > this.score.away) {
           return 'victory';
         } else if (this.score.home < this.score.away) {
@@ -231,15 +254,15 @@
       },
 
       squadSize() {
-        return Object.values(this.match.data.players).filter(p => p.party === this.player.party).length
+        return Object.values(this.match.stats.players).filter(p => p.party === this.player.party).length
       },
 
       player() {
-        return this.match.data.players[this.current]
+        return this.match.stats.players[this.current]
       },
 
       players() {
-        const players = Object.entries(this.match.data.players).map(([uid, player]) => {
+        const players = Object.entries(this.match.stats.players).map(([uid, player]) => {
           return { uid, ...player }
         })
 
