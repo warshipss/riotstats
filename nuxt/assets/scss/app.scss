@@ -5,8 +5,12 @@
   "icons";
 
 @import "~bootstrap/scss/bootstrap";
+@import "~vue-select/src/scss/vue-select";
+
+@import "globals";
 
 @import "components/nav",
+  "components/footer",
   "components/search",
   "components/layout",
   "components/profile",

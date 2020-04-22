@@ -17,7 +17,7 @@ class Match extends JsonResource
     {
         return [
             'uid' => $this->uid,
-            'data' => $this->data,
+            'stats' => $this->stats,
             'started_at' => $this->started_at->timestamp,
             'users' => ShortProfile::collection($this->users),
         ];

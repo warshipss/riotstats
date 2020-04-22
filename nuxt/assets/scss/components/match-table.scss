@@ -37,10 +37,9 @@
   }
 
   &__stats {
+    border: none;
     position: relative;
-    border-right: none;
     white-space: nowrap;
-    border-left: 1px solid;
 
     th {
       padding: .5rem;

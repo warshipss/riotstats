@@ -29,7 +29,7 @@ class Match extends Model
      * @var array
      */
     protected $casts = [
-        'data' => 'object'
+        'stats' => 'object'
     ];
 
     /**

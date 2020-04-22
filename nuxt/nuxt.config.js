@@ -28,6 +28,10 @@ export default {
       { rel: 'apple-touch-icon-precomposed', sizes: '120x120', href: '/favicon/apple-touch-icon-120x120.png', },
       { rel: 'apple-touch-icon-precomposed', sizes: '144x144', href: '/favicon/apple-touch-icon-144x144.png', },
       { rel: 'apple-touch-icon-precomposed', sizes: '152x152', href: '/favicon/apple-touch-icon-152x152.png', },
+    ],
+
+    script: [
+      { src: 'https://platform.twitter.com/widgets.js' },
     ]
   },
 
@@ -45,7 +49,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~/plugins/ga.js', mode: 'client' }
+    { src: '~/plugins/global.js' },
+    { src: '~/plugins/ga.js', mode: 'client' },
   ],
   /*
   ** Nuxt.js dev-modules

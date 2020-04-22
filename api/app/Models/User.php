@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Features\BinaryUuids;
+use App\Features\PlayerProcessing;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable, BinaryUuids;
+    use Notifiable, BinaryUuids, PlayerProcessing;
 
     /**
      * The attributes that should be mutated to dates.
@@ -41,7 +42,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'stats' => 'object'
     ];
 
     /**

@@ -3,12 +3,10 @@
 namespace App\Jobs;
 
 use Carbon\Carbon;
-use App\Models\User;
 use App\Models\Match;
-use App\Riot\Valorant;
-use App\Riot\TokenFeatures;
 use App\Riot\MatchAnalyzer;
 use Illuminate\Bus\Queueable;
+use App\Features\ServiceSettings;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -16,7 +14,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class AnalyzeMatch implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, ServiceSettings;
 
     /**
      * @var Match
@@ -40,10 +38,25 @@ class AnalyzeMatch implements ShouldQueue
      */
     public function handle()
     {
+        $changed = Carbon::createFromTimestamp($this->getSetting('valorant.match_analyzer_changed', 0));
+
         $analyzer = new MatchAnalyzer($this->match->original);
 
-        $this->match->data = $analyzer->toArray();
+        $this->match->stats = $analyzer->toArray();
         $this->match->processed_at = Carbon::now();
         $this->match->save();
+
+        $this->match->users()->touch();
+    }
+
+    /**
+     * The job failed to process.
+     *
+     * @param  \Exception  $exception
+     * @return void
+     */
+    public function failed(\Exception $exception)
+    {
+        FetchMatch::dispatch($this->match);
     }
 }
