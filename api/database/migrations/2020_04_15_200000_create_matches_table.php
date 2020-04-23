@@ -23,8 +23,8 @@ class CreateMatchesTable extends Migration
                 ->cascadeOnDelete();
 
             $table->binary('uid')->index();
-            $table->json('stats')->nullable();
-            $table->json('original')->nullable();
+            $table->jsonb('stats')->nullable();
+            $table->jsonb('original')->nullable();
 
             $table->timestamp('processed_at')->nullable();
             $table->timestamp('started_at')->nullable();
