@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Tokens;
 
 use App\Models\Token;
 use App\Riot\Valorant;
@@ -8,7 +8,7 @@ use App\Riot\TokenFeatures;
 use Illuminate\Console\Command;
 use App\Exceptions\InvalidTokenException;
 
-class CheckToken extends Command
+class Check extends Command
 {
     use TokenFeatures;
 
@@ -17,14 +17,14 @@ class CheckToken extends Command
      *
      * @var string
      */
-    protected $signature = 'check:token';
+    protected $signature = 'tokens:check';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Obtains new tokens when needed';
 
     /**
      * Create a new command instance.
