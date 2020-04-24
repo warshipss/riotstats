@@ -43,8 +43,11 @@ services:
   adminer:
     image: adminer
     restart: always
-    networks:
-      - backend
+      networks:
+        backend:
+        reverse:
+          aliases:
+            - riotstats_adminer
 
   redis:
     image: redis
