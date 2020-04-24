@@ -22,7 +22,7 @@ services:
       backend:
       reverse:
         aliases:
-        - riotstats
+          - riotstats
     volumes:
       - ./api:/app
       - caddy-data:/root/.caddy
@@ -43,11 +43,11 @@ services:
   adminer:
     image: adminer
     restart: always
-      networks:
-        backend:
-        reverse:
-          aliases:
-            - riotstats_adminer
+    networks:
+      backend:
+      reverse:
+        aliases:
+          - riotstats_adminer
 
   redis:
     image: redis
