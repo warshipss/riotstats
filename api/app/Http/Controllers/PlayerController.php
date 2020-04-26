@@ -119,11 +119,7 @@ class PlayerController extends Controller
             return ['error' => 'NOT_FETCHED_YET'];
         }
 
-        $unprocessed = $user->getUnprocessedMatches();
-
-        foreach ($unprocessed as $match) {
-            AnalyzeMatch::dispatch($match);
-        }
+        $user->analyzeMatches();
 
         if (! $user->processed_at || $user->processed_at->lt($user->fetched_at)) {
             $user->process();

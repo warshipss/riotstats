@@ -76,7 +76,7 @@ class FetchMatch implements ShouldQueue
             'fetched_at' => Carbon::now(),
         ]);
 
-        AnalyzeMatch::dispatch($this->match);
+        $this->match->analyze();
 
         if ($this->flagNewUsers) {
             FindNames::dispatch();
