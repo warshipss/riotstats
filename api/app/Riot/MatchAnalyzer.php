@@ -16,7 +16,7 @@ class MatchAnalyzer
      */
     public function __construct($original)
     {
-        $this->original = json_decode($original);
+        $this->original = $original;
     }
 
     /**
@@ -41,17 +41,20 @@ class MatchAnalyzer
     protected function getVersus()
     {
         $versus = [];
+        $uids = collect($this->original->players)
+            ->map(function ($player) {
+                return $player->uid;
+            });
 
-        foreach ($this->original->kills as $kill)
-        {
-            if (! isset($versus[$kill->killer])) {
-                $versus[$kill->killer] = [];
-            }
+        foreach ($uids as $uid) {
+            $versus[$uid] = $uids->except($uid)->toArray();
+        }
 
-            if (! isset($versus[$kill->killer][$kill->victim])) {
-                $versus[$kill->killer][$kill->victim] = 0;
-            }
+        if (! $this->original->kills) {
+            return $versus;
+        }
 
+        foreach ($this->original->kills as $kill) {
             $versus[$kill->killer][$kill->victim]++;
         }
 
@@ -104,8 +107,11 @@ class MatchAnalyzer
                 'assists' => $player->stats->assists,
                 'rounds' => $player->stats->roundsPlayed,
                 'weapons' => $this->getByWeapon($player->subject),
-                'adr' => floor($damage / $player->stats->roundsPlayed),
             ];
+        }
+
+        if (! $this->original->kills) {
+            return $players;
         }
 
         $byRound = collect($this->original->kills)

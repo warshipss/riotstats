@@ -14,20 +14,22 @@ trait PlayerProcessing
     /**
      * @return mixed
      */
-    public function getUnprocessedMatches()
+    public function analyzeMatches()
     {
         $changed = Carbon::createFromTimestamp((int) $this->getSetting('valorant.match_analyzer_changed', 0))
             ->toDateTimeString();
 
         $unprocessedMatches = $this->matches()
-            ->select('id', 'processed_at')
+            ->select('id', 'processed_at', 'original')
             ->where(function ($q) use ($changed) {
                 $q->whereNull('processed_at')
                     ->orWhere('processed_at', '<', $changed);
             })
             ->get();
 
-        return $unprocessedMatches;
+        foreach ($unprocessedMatches as $match) {
+            $match->analyze();
+        }
     }
 
     /**

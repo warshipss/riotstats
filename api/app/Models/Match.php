@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use App\Riot\MatchAnalyzer;
+use App\Features\ServiceSettings;
 use Illuminate\Database\Eloquent\Model;
 
 class Match extends Model
 {
+    use ServiceSettings;
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -26,7 +31,8 @@ class Match extends Model
      * @var array
      */
     protected $casts = [
-        'stats' => 'object'
+        'stats' => 'object',
+        'original' => 'object',
     ];
 
     /**
@@ -43,5 +49,19 @@ class Match extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'match_user');
+    }
+
+    /**
+     *
+     */
+    public function analyze()
+    {
+        $analyzer = new MatchAnalyzer($this->original);
+
+        $this->stats = $analyzer->toArray();
+        $this->processed_at = Carbon::now();
+        $this->save();
+
+        $this->users()->touch();
     }
 }
