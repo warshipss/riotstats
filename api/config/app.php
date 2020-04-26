@@ -56,15 +56,8 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
-    'fallbackDomain' => env('DOMAIN_EN'),
-
-    'domains' => [
-        'en' => env('DOMAIN_EN'),
-        'ru' => env('DOMAIN_RU'),
-        'zh' => env('DOMAIN_ZH'),
-        'ko' => env('DOMAIN_KO'),
-        'ja' => env('DOMAIN_JA'),
-    ],
+    'domain' => env('APP_DOMAIN'),
+    'locales' => ['ru', 'de', 'es', 'fr', 'ja', 'ko', 'pt', 'tr', 'zh'],
 
     /*
     |--------------------------------------------------------------------------
