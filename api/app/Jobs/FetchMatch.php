@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Match;
 use App\Riot\Valorant;
 use App\Riot\TokenFeatures;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use App\Features\ServiceSettings;
 use Illuminate\Queue\SerializesModels;
@@ -38,6 +39,16 @@ class FetchMatch implements ShouldQueue
     }
 
     /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array
+     */
+    public function tags()
+    {
+        return ['fetch', 'match:' . $this->match->id];
+    }
+
+    /**
      * Execute the job.
      *
      * @return void
@@ -61,6 +72,9 @@ class FetchMatch implements ShouldQueue
         $this->match->save();
 
         $this->match->users()->sync(array_values($ids));
+        $this->match->users()->update([
+            'fetched_at' => Carbon::now(),
+        ]);
 
         AnalyzeMatch::dispatch($this->match);
 
@@ -89,7 +103,7 @@ class FetchMatch implements ShouldQueue
 
         foreach ($uids as $uid)
         {
-            $user = User::uuid($uid)
+            $user = User::where('uid', $uid)
                 ->first();
 
             if (! $user) {

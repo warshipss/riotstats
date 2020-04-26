@@ -3,7 +3,7 @@ import { mapState } from 'vuex'
 
 export default Vue.mixin({
   methods: {
-    $playerPath (nickname, tag, game) {
+    $playerPath (game, nickname, tag) {
       if (! game) {
         game = this.$route.params.game
       }
@@ -62,5 +62,9 @@ export default Vue.mixin({
 
   computed: {
     ...mapState(['resources']),
+
+    $locale () {
+      return this.$i18n.locales.filter(l => l.code === this.$i18n.locale)[0]
+    },
   }
 })

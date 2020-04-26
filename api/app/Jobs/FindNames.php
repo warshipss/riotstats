@@ -53,7 +53,7 @@ class FindNames implements ShouldQueue
 
         foreach ($response as $user)
         {
-            User::uuid($user->Subject)
+            User::where('uid', $user->Subject)
                 ->update([
                     'tag' => $user->TagLine,
                     'nickname' => $user->GameName,

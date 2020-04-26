@@ -8,7 +8,7 @@ export default {
   },
 
   head: {
-    titleTemplate: '%s - RiotStats.com',
+    titleTemplate: '%s — RiotStats.com',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -16,7 +16,7 @@ export default {
 
       { property: 'og:type', content: 'website' },
       { property: 'og:site_name', content: 'RIOTSTATS.COM' },
-      { property: 'og:image', content: `https://${process.env.DOMAIN_EN}/img/preview.jpg` },
+      { property: 'og:image', content: `https://${process.env.APP_DOMAIN}/img/preview.jpg` },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -79,13 +79,90 @@ export default {
     seo: true,
     lazy: true,
     langDir: 'locales/',
+    differentDomains: true,
     detectBrowserLanguage: false,
     locales: [
-      { code: 'en', iso: 'en-US', file: 'en.js', domain: process.env.DOMAIN_EN, match: '..' },
-      { code: 'ru', iso: 'ru-RU', file: 'ru.js', domain: process.env.DOMAIN_RU, match: '^(ru|uk|be)' },
+      {
+        code: 'ru',
+        iso: 'ru-RU',
+        file: 'ru.json',
+        title: 'Русский',
+        match: '^(ru|uk|be)',
+        domain: 'ru.' + process.env.APP_DOMAIN,
+      },
+      {
+        code: 'de',
+        iso: 'de-DE',
+        match: '^(de)',
+        file: 'de.json',
+        title: 'Deutsch',
+        domain: 'de.' + process.env.APP_DOMAIN,
+      },
+      {
+        code: 'fr',
+        iso: 'fr-FR',
+        match: '^(fr)',
+        file: 'fr.json',
+        title: 'Français',
+        domain: 'fr.' + process.env.APP_DOMAIN,
+      },
+      {
+        code: 'pt',
+        iso: 'pt-PT',
+        match: '^(pt)',
+        file: 'pt.json',
+        title: 'Português',
+        domain: 'pt.' + process.env.APP_DOMAIN,
+      },
+      {
+        code: 'es',
+        iso: 'es-ES',
+        file: 'es.json',
+        title: 'Español',
+        match: '^(es)',
+        domain: 'es.' + process.env.APP_DOMAIN,
+      },
+      {
+        code: 'tr',
+        iso: 'tr-TR',
+        file: 'tr.json',
+        title: 'Türkçe',
+        match: '^(tr)',
+        domain: 'tr.' + process.env.APP_DOMAIN,
+      },
+      {
+        code: 'ko',
+        iso: 'ko-KR',
+        match: '^ko',
+        file: 'ko.json',
+        title: '한국어',
+        domain: 'ko.' + process.env.APP_DOMAIN,
+      },
+      {
+        code: 'zh',
+        iso: 'zh-CN',
+        match: '^zh',
+        title: '汉语',
+        file: 'zh-cn.json',
+        domain: 'zh.' + process.env.APP_DOMAIN,
+      },
+      {
+        code: 'ja',
+        iso: 'ja-JP',
+        match: '^ja',
+        file: 'ja.json',
+        title: '日本語',
+        domain: 'ja.' + process.env.APP_DOMAIN,
+      },
+      {
+        code: 'en',
+        match: '..',
+        iso: 'en-US',
+        file: 'en.json',
+        title: 'English',
+        domain: process.env.APP_DOMAIN,
+      },
     ],
-
-    differentDomains: true,
 
     vuex: {
       syncLocale: true,

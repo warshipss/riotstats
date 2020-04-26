@@ -1,4 +1,10 @@
 .vs {
+  &__no-options, &__selected, &__dropdown-option {
+    margin: 0;
+    font-weight: bold;
+    padding: 1rem 2rem;
+  }
+
   &__dropdown-toggle {
     border: none;
     padding: 0;
@@ -6,19 +12,40 @@
     border-radius: 0;
   }
 
+  &__dropdown-menu {
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    top: calc(100% + 1rem);
+  }
+
+  &__dropdown-option {
+    &--highlight {
+      background: $primary;
+    }
+  }
+
+  &__actions {
+    padding: 0 2rem 0 0;
+  }
+
   &__search {
     margin: 0;
     border: none;
     font-size: 1rem;
+    padding: 0 2rem;
     height: 3.75rem;
     border-radius: 0;
     background: #fff;
     font-weight: bold;
-    padding: 0 3.5rem;
     color: $body-color;
 
     &:focus {
+      margin: 0;
+      border: none;
       outline: none;
+      padding: 0 2rem;
       box-shadow: none;
 
       &::placeholder {

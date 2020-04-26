@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use App\Features\BinaryUuids;
 use App\Features\PlayerProcessing;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable, BinaryUuids, PlayerProcessing;
+    use Notifiable, PlayerProcessing;
 
     /**
      * The attributes that should be mutated to dates.

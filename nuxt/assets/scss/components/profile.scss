@@ -2,12 +2,14 @@
   $n: &;
 
   &__stats {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    @extend .row;
 
     &:not(:last-of-type) {
       margin-bottom: 1rem;
+    }
+
+    .stat {
+      @extend .col, .col-md-4;
     }
   }
 

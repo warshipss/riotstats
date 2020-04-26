@@ -7,7 +7,7 @@ role=${CONTAINER_ROLE:-fpm}
 
 if [[ "$role" == "queue" ]]; then
 
-    exec php /app/artisan queue:work --verbose --tries=2 --timeout=30
+    exec php /app/artisan horizon
 
 elif [[ "$role" == "cron" ]]; then
 

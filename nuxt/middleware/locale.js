@@ -1,4 +1,5 @@
-import Cookie from 'cookie'
+import Cookie from 'js-cookie'
+import CookieParser from 'cookie'
 import { parse } from 'accept-language-parser'
 
 const matchBrowserLocale = (locales, supported) => {
@@ -14,7 +15,7 @@ const matchBrowserLocale = (locales, supported) => {
 }
 
 const getCookie = req => {
-  return Cookie.parse(req ? (req.headers.cookie || '') : document.cookie)
+  return CookieParser.parse(req ? (req.headers.cookie || '') : document.cookie)
 }
 
 const getBrowserLocale = req => {

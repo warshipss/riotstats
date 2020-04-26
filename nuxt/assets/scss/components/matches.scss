@@ -1,6 +1,15 @@
-.stat {
-  &__label {
-    font-size: .75rem;
+.matches {
+  &__more {
+    display: flex;
+    padding: 3rem;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
 
@@ -38,23 +47,16 @@
   &__agent {
     width: 5rem;
     height: 5rem;
+    content: ' ';
     margin-right: 2rem;
-
-    &_small {
-      width: 3rem;
-      height: 3rem;
-    }
-
-    &-cell {
-      padding: 0 !important;
-    }
+    background-size: cover;
+    background-position: center center;
   }
 
   &__details {
     background: #fff;
     border-radius: 0;
     margin-bottom: 1rem;
-
     border: 1px solid rgba(15, 25, 35, .5);
   }
 
@@ -146,15 +148,15 @@
     &_victory {
       &:hover {
         color: $body-bg;
-        border-color: #ff4655;
+        border-color: $primary;
       }
 
       &:after {
-        background: #ff4655;
+        background: $primary;
       }
 
       #{$n}__details-btn {
-        background: #ff4655;
+        background: $primary;
       }
     }
   }

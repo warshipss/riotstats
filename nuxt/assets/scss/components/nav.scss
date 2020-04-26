@@ -12,6 +12,16 @@
     color: #fff !important;
     text-transform: uppercase;
     padding: 0 1rem !important;
+
+    &_language {
+      font-weight: bold;
+      text-transform: none;
+
+      .icon {
+        font-size: 2rem;
+        margin-right: .5rem;
+      }
+    }
   }
 
   &-brand {

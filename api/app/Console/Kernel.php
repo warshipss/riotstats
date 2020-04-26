@@ -33,6 +33,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('sitemap:generate')
             ->daily();
 
+        $schedule->command('horizon:snapshot')
+            ->everyFiveMinutes();
+
         if (config('app.env') !== 'dev')
         {
             $schedule->command('update:users')
