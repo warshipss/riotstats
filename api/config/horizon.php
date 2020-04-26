@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'domain' => 'horizon.' . env('DOMAIN_EN'),
+    'domain' => 'horizon.' . env('APP_DOMAIN'),
 
     /*
     |--------------------------------------------------------------------------
