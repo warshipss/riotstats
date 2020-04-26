@@ -49,6 +49,7 @@ class SitemapGenerate extends Command
         $count = $chunks->count();
 
         $index = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><sitemapindex />');
+        $index->addAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
 
         for ($i = 1; $i <= $count; $i++)
         {
