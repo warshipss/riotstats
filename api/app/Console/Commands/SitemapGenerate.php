@@ -68,9 +68,8 @@ class SitemapGenerate extends Command
      */
     protected function generateChunk($n = 1, $users)
     {
-        $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset />');
-        $xml->addAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
-        $xml->addAttribute('xmlns:xhtml', 'http://www.w3.org/1999/xhtml');
+        $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset
+            xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" />');
 
         $users->map(function ($user) use ($xml) {
             $this->getUserUrl($user, $xml->addChild('url'));
@@ -91,7 +90,7 @@ class SitemapGenerate extends Command
 
         foreach (config('app.locales') as $locale)
         {
-            $link = $node->addChild('xhtml:link');
+            $link = $node->addChild('xhtml:link', '', 'http://www.w3.org/1999/xhtml');
 
             $link->addAttribute('hreflang', $locale);
             $link->addAttribute('rel', 'alternate');
