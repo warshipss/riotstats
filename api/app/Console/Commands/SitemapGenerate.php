@@ -25,13 +25,6 @@ class SitemapGenerate extends Command
     protected $description = 'Command description';
 
     /**
-     * @var string[]
-     */
-    protected $locales = [
-        'en', 'ru', 'zh', 'ko', 'ja'
-    ];
-
-    /**
      * Create a new command instance.
      *
      * @return void
@@ -48,7 +41,7 @@ class SitemapGenerate extends Command
      */
     public function handle()
     {
-        $chunkSize = count($this->locales) + 1;
+        $chunkSize = count(config('app.locales')) + 1;
         $chunks = User::select('tag', 'nickname', 'updated_at')
             ->get()
             ->chunk(floor(50e3 / $chunkSize));
@@ -62,7 +55,7 @@ class SitemapGenerate extends Command
             $this->generateChunk($i, $chunks->get($i - 1));
 
             $subSitemap = $index->addChild('sitemap');
-            $subSitemap->addChild('loc', 'https://' . config('app.domains.en') . '/users' . $i . '.xml');
+            $subSitemap->addChild('loc', 'https://' . config('app.domain') . '/users' . $i . '.xml');
         }
 
         Storage::put('sitemap/sitemap.xml', $index->asXML());
@@ -95,7 +88,7 @@ class SitemapGenerate extends Command
         $node->addChild('changefreq', 'monthly');
         $node->addChild('lastmod', $user->updated_at->format('Y-m-d'));
 
-        foreach ($this->locales as $locale)
+        foreach (config('app.locales') as $locale)
         {
             $link = $node->addChild('xhtml:link');
 
@@ -113,7 +106,11 @@ class SitemapGenerate extends Command
      */
     protected function getUrl($user, $locale = 'en')
     {
-        $domain = config('app.domains.' . $locale, config('app.fallbackDomain'));
+        $domain = config('app.domain');
+
+        if ($locale !== 'en') {
+            $domain = $locale . '.' . $domain;
+        }
 
         return 'https://' . $domain . '/valorant/player/' . $user->nickname . '/' . $user->tag;
     }
