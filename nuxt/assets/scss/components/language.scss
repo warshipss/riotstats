@@ -1,0 +1,42 @@
+.language {
+  .modal {
+    &-content {
+      border: none;
+      border-radius: 0;
+      background: #e7e6e3 url('/img/lang-artwork.jpg') no-repeat top left / contain;
+    }
+
+    &-dialog {
+      max-width: 40rem;
+    }
+
+    &-header {
+      border: none;
+      justify-content: center;
+    }
+
+    &-title {
+      text-align: center;
+    }
+
+    &-footer {
+      display: none;
+    }
+  }
+
+  &__list {
+    .list-group-item {
+      border: none;
+      padding: .5rem 0;
+      font-weight: bold;
+      text-align: center;
+      color: $body-color;
+      background: transparent;
+      transition: color 500ms ease;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+}

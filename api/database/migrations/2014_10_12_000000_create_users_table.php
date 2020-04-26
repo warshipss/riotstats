@@ -16,11 +16,11 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
 
-            $table->binary('uid')->index();
+            $table->uuid('uid')->index();
             $table->string('nickname')->nullable();
             $table->string('tag')->nullable();
 
-            $table->json('stats')->nullable();
+            $table->jsonb('stats')->nullable();
             $table->timestamp('queued_at')->nullable();
             $table->timestamp('fetched_at')->nullable();
             $table->timestamp('processed_at')->nullable();

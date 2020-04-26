@@ -32,6 +32,16 @@ class AnalyzeMatch implements ShouldQueue
     }
 
     /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array
+     */
+    public function tags()
+    {
+        return ['process', 'match:' . $this->match->id];
+    }
+
+    /**
      * Execute the job.
      *
      * @return void

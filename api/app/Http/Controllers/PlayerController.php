@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\AnalyzeMatch;
-use Carbon\Carbon;
 use App\Models\User;
+use App\Jobs\AnalyzeMatch;
 use App\Jobs\UpdatePlayer;
-use App\Jobs\FindPlayerUid;
 use Illuminate\Http\Request;
-use App\Features\ServiceSettings;
+use App\Features\PlayerProcessing;
 use App\Http\Resources\ShortProfile;
 use App\Http\Resources\PlayerProfile;
 
 class PlayerController extends Controller
 {
-    use ServiceSettings;
+    use PlayerProcessing;
 
     /**
      * @param Request $request
@@ -26,7 +24,23 @@ class PlayerController extends Controller
         $term = $request->get('term');
 
         $users = User::where('nickname', 'like', $term . '%')
-            ->withoutGlobalScopes()
+            ->select('uid', 'nickname', 'tag')
+            ->limit(15)
+            ->get();
+
+        return ShortProfile::collection($users);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function update(Request $request)
+    {
+        $term = $request->get('term');
+
+        $users = User::where('nickname', 'like', $term . '%')
             ->select('uid', 'nickname', 'tag')
             ->limit(15)
             ->get();
@@ -41,14 +55,9 @@ class PlayerController extends Controller
      */
     public function show(Request $request)
     {
-        $tag = $request->get('tag');
-        $nickname = $request->get('nickname');
+        $user = $this->searchUser($request);
 
-        if ($tag === null || $nickname === null) {
-            abort(404);
-        }
-
-        return $this->getProfile($nickname, $tag, 1);
+        return $this->getProfile($user, 1);
     }
 
     /**
@@ -58,36 +67,51 @@ class PlayerController extends Controller
      */
     public function short(Request $request)
     {
+        $user = $this->searchUser($request);
+
+        return $this->getProfile($user);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    protected function searchUser(Request $request)
+    {
         $tag = $request->get('tag');
         $nickname = $request->get('nickname');
 
         if ($tag === null || $nickname === null) {
-            abort(404);
+            abort(406, 'INVALID_INPUT');
         }
 
-        return $this->getProfile($nickname, $tag);
-    }
-
-    /**
-     * @param $nickname
-     * @param $tag
-     * @param $page
-     *
-     * @return PlayerProfile|string[]
-     */
-    protected function getProfile($nickname, $tag, $page = false)
-    {
         $user = User::where('nickname', $nickname)
             ->where('tag', $tag)
             ->first();
 
         if (! $user)
         {
-            FindPlayerUid::dispatch($nickname, $tag);
+            $user = $this->findExact($nickname, $tag);
 
-            return ['error' => 'SEARCHING_FOR_USER'];
+            if (! $user) {
+                abort(404, 'NOT_FOUND');
+            }
+
+            UpdatePlayer::dispatch($user);
         }
 
+        return $user;
+    }
+
+    /**
+     * @param User $user
+     * @param bool $page
+     *
+     * @return PlayerProfile|string[]
+     */
+    protected function getProfile(User $user, $page = false)
+    {
         if (! $user->fetched_at)
         {
             UpdatePlayer::dispatch($user);

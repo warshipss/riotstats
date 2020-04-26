@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-use App\Features\BinaryUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Match extends Model
 {
-    use BinaryUuids;
-
     /**
      * The attributes that aren't mass assignable.
      *

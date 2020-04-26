@@ -3,6 +3,8 @@
 namespace App\Features;
 
 use Carbon\Carbon;
+use App\Models\User;
+use App\Riot\Valorant;
 use App\Riot\PlayerAnalyzer;
 
 trait PlayerProcessing
@@ -18,7 +20,6 @@ trait PlayerProcessing
             ->toDateTimeString();
 
         $unprocessedMatches = $this->matches()
-            ->withoutGlobalScopes()
             ->select('id', 'processed_at')
             ->where(function ($q) use ($changed) {
                 $q->whereNull('processed_at')
@@ -38,7 +39,6 @@ trait PlayerProcessing
             ->toDateTimeString();
 
         $processedMatches = $this->matches()
-            ->withoutGlobalScopes()
             ->whereNotNull('processed_at')
             ->orderBy('started_at', 'desc')
             ->where('stats->type', 'matchmaking')
@@ -51,5 +51,33 @@ trait PlayerProcessing
         $this->stats = $analyzer->toArray();
         $this->processed_at = Carbon::now();
         $this->save();
+    }
+
+    /**
+     * @param $nickname
+     * @param $tag
+     *
+     * @return bool
+     */
+    public function findExact($nickname, $tag)
+    {
+        /**
+         * @var Valorant $api
+         */
+        $api = app(Valorant::class);
+
+        $uid = $api->getUid($nickname, $tag);
+
+        if (! isset($uid->uid)) {
+            return false;
+        }
+
+        $user = User::firstOrCreate(['uid' => $uid->uid]);
+
+        $user->tag = $tag;
+        $user->nickname = $nickname;
+        $user->save();
+
+        return $user;
     }
 }

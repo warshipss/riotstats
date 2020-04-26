@@ -4,11 +4,27 @@ footer {
 }
 
 .footer {
-  padding: 0 2rem;
+  padding: 2rem 0;
+
+  .p {
+    color: #666;
+    font-size: .75rem;
+  }
 
   &__main {
     margin-bottom: 2rem;
     padding-bottom: 2rem;
-    border-bottom: 2px solid #666;
+    border-bottom: 2px solid #333;
+  }
+
+  &__sub {
+
+  }
+
+  &__love {
+    margin: 0;
+    color: #666;
+    font-size: .9rem;
+    text-align: center;
   }
 }

@@ -7,7 +7,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "unlink('composer-setup.php');" \
     && chmod +x /usr/local/bin/composer \
     && apk --update --no-cache add bash autoconf postgresql-dev g++ make \
-    && docker-php-ext-install pdo pdo_pgsql pdo_mysql \
+    && docker-php-ext-install pcntl pdo pdo_pgsql pdo_mysql \
     && pecl install redis \
     && docker-php-ext-enable redis
 

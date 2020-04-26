@@ -32,6 +32,16 @@ class AnalyzePlayer implements ShouldQueue
     }
 
     /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array
+     */
+    public function tags()
+    {
+        return ['process', 'user:' . $this->user->id];
+    }
+
+    /**
      * Execute the job.
      *
      * @return void
@@ -42,7 +52,6 @@ class AnalyzePlayer implements ShouldQueue
             ->toDateTimeString();
 
         $unprocessedMatches = $this->user->matches()
-            ->withoutGlobalScopes()
             ->select('id', 'processed_at')
             ->where(function ($q) use ($changed) {
                 $q->whereNull('processed_at')
@@ -59,7 +68,6 @@ class AnalyzePlayer implements ShouldQueue
         }
 
         $processedMatches = $this->user->matches()
-            ->withoutGlobalScopes()
             ->whereNotNull('processed_at')
             ->orderBy('started_at', 'desc')
             ->select('id', 'stats', 'processed_at')

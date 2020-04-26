@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="#">Riot Stats</a>
+    <nuxt-link :to="localePath('index')" class="navbar-brand" href="#">RiotStats</nuxt-link>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,19 +10,23 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <nuxt-link :to="localePath('index')" class="nav-link" href="#">{{ $t('Home') }}</nuxt-link>
-        </li>
-
-        <li class="nav-item">
           <nuxt-link :to="$gamePath('valorant', 'leaderboard')" class="nav-link">
             {{ $t('Leaderboard') }}
           </nuxt-link>
         </li>
 
         <li class="nav-item">
-          <nuxt-link :to="$playerPath('refgiton', '9020', 'valorant')" class="nav-link">
+          <nuxt-link :to="$playerPath('valorant', 'refgiton', '9020')" class="nav-link">
             refgiton#9020
           </nuxt-link>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="#" class="nav-link nav-link_language" v-b-modal="'language'">
+            <i class="icon icon-globe" /> {{ $locale.title }}
+          </a>
         </li>
       </ul>
     </div>

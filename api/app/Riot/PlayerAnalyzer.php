@@ -34,8 +34,44 @@ class PlayerAnalyzer
     public function toArray()
     {
         return array_merge($this->getSummary(), [
+            'record' => $this->getRecord(),
             'matches' => count($this->matches),
         ]);
+    }
+
+    /**
+     * @return object
+     */
+    protected function getRecord()
+    {
+        $uid = $this->user->uid;
+        $matches = $this->matches;
+
+        $record = (object) [
+            'kda' => [],
+            'kills' => 0,
+            'kda_sum' => 0,
+        ];
+
+        for ($i = 0; $i < count($matches) -1; $i++)
+        {
+            $match = $matches[$i];
+            $player = $match['stats']->players->{$uid};
+
+            $kda_sum = ($player->kills + ($player->assists - $player->deaths) * 0.5);
+
+            if ($kda_sum > $record->kda_sum)
+            {
+                $record->kda_sum = $kda_sum;
+                $record->kda = [
+                    'kills' => $player->kills,
+                    'deaths' => $player->deaths,
+                    'assists' => $player->assists,
+                ];
+            }
+        }
+
+        return $record;
     }
 
     /**

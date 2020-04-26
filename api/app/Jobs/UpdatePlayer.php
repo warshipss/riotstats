@@ -36,6 +36,16 @@ class UpdatePlayer implements ShouldQueue
     }
 
     /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array
+     */
+    public function tags()
+    {
+        return ['fetch', 'user:' . $this->user->id];
+    }
+
+    /**
      * Execute the job.
      *
      * @return void
@@ -66,7 +76,7 @@ class UpdatePlayer implements ShouldQueue
 
             foreach ($matches->History as $match)
             {
-                $record = Match::uuid($match->MatchID)
+                $record = Match::where('uid', $match->MatchID)
                     ->where('game_id', 1)
                     ->first();
 

@@ -3,12 +3,39 @@
 
   margin: 0;
 
-  td, th {
+  tbody td, thead th {
+    border-top: none;
+    border-bottom: none;
     vertical-align: middle;
+  }
+
+  td {
+    color: #666;
+  }
+
+  &__nickname-cell {
+    background: #fff;
+  }
+
+  // __even means another team
+  &__even {
+    td {
+      background: $body-bg;
+    }
   }
 
   &__first {
     border-left: 1px solid $body-bg;
+  }
+
+  &__agent {
+    width: 3rem;
+    height: 3rem;
+
+    &-cell {
+      width: 3rem;
+      padding: 0 !important;
+    }
   }
 
   &__soon {
@@ -18,21 +45,14 @@
     border-left: 1px solid $body-bg;
   }
 
-  &__even {
-    td {
-      background: $body-bg;
-    }
-  }
-
   &__groups {
     th {
       color: #999;
       padding: .25rem;
+      background: #fff;
       font-weight: 500;
       font-size: .75rem;
       text-align: center;
-      background: $body-bg;
-      border: none !important;
     }
   }
 
@@ -42,15 +62,30 @@
     white-space: nowrap;
 
     th {
+      width: 3rem;
       padding: .5rem;
       text-align: center;
+      background: $body-bg;
+      border-bottom: 2px solid darken($body-bg, 5%);
+    }
+  }
+
+  &__nickname {
+    color: #555;
+    font-size: .9rem;
+    font-weight: 700;
+    transition: color 500ms ease;
+
+    &:hover {
+      color: $primary;
+      text-decoration: none;
     }
   }
 
   &__stat-name {
     font-weight: 700;
+    color: $body-color;
     font-size: .875rem;
-    color: rgb(51, 52, 51);
     border-bottom: 1px dotted rgb(85, 86, 85);
 
     &:hover {
@@ -60,7 +95,6 @@
   }
 
   &__stat-value {
-    color: #777;
     font-weight: bold;
     font-size: .875rem;
     text-align: center;

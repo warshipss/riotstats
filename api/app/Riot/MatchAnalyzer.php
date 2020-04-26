@@ -24,12 +24,10 @@ class MatchAnalyzer
      */
     public function toArray()
     {
-        $players = $this->getPlayers();
-
         return [
-            'players' => $players,
             'teams' => $this->getTeams(),
             'versus' => $this->getVersus(),
+            'players' => $this->getPlayers(),
             'map' => $this->original->matchInfo->mapId,
             'ranked' => $this->original->matchInfo->isRanked,
             'completed' => $this->original->matchInfo->isCompleted,
@@ -81,36 +79,59 @@ class MatchAnalyzer
     {
         $players = [];
 
-        foreach ($this->original->players as $player) {
-            $players[$player->subject] = $this->getPlayer($player);
+        foreach ($this->original->players as $player)
+        {
+            $damage = $this->getTotalDamage($player);
+
+            $players[$player->subject] = [
+                'entries' => [
+                    'kills' => 0,
+                    'deaths' => 0,
+                ],
+                'multi' => [
+                    '3k' => 0,
+                    '4k' => 0,
+                    '5k' => 0,
+                ],
+                'damage' => $damage,
+                'team' => $player->teamId,
+                'party' => $player->partyId,
+                'agent' => $player->characterId,
+                'score' => $player->stats->score,
+                'kills' => $player->stats->kills,
+                'deaths' => $player->stats->deaths,
+                'casts' => $this->getCasts($player),
+                'assists' => $player->stats->assists,
+                'rounds' => $player->stats->roundsPlayed,
+                'weapons' => $this->getByWeapon($player->subject),
+                'adr' => floor($damage / $player->stats->roundsPlayed),
+            ];
+        }
+
+        $byRound = collect($this->original->kills)
+            ->groupBy('round');
+
+        foreach ($byRound as $round => $kills)
+        {
+            $kills = $kills->sortBy('roundTime');
+            $first = $kills->first();
+
+            $players[$first->killer]['entries']['kills']++;
+            $players[$first->victim]['entries']['deaths']++;
+
+            $grouped = $kills->groupBy('killer');
+
+            foreach ($grouped as $killer => $kills)
+            {
+                $count = $kills->count();
+
+                if ($count >= 3 && $count <= 5) {
+                    $players[$killer]['multi'][$count . 'k']++;
+                }
+            }
         }
 
         return $players;
-    }
-
-    /**
-     * @param $original
-     *
-     * @return array
-     */
-    protected function getPlayer($original)
-    {
-        $damage = $this->getTotalDamage($original);
-
-        return [
-            'damage' => $damage,
-            'team' => $original->teamId,
-            'party' => $original->partyId,
-            'agent' => $original->characterId,
-            'score' => $original->stats->score,
-            'kills' => $original->stats->kills,
-            'deaths' => $original->stats->deaths,
-            'casts' => $this->getCasts($original),
-            'assists' => $original->stats->assists,
-            'rounds' => $original->stats->roundsPlayed,
-            'weapons' => $this->getByWeapon($original->subject),
-            'adr' => floor($damage / $original->stats->roundsPlayed),
-        ];
     }
 
     /**
