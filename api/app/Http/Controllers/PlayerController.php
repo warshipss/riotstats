@@ -122,7 +122,7 @@ class PlayerController extends Controller
         $user->analyzeMatches();
 
         if (! $user->processed_at || $user->processed_at->lt($user->fetched_at)) {
-            $user->process();
+            $user->analyze();
         }
 
         if ($page)

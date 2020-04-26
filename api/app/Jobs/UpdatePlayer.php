@@ -110,10 +110,10 @@ class UpdatePlayer implements ShouldQueue
             }
         }
 
-        AnalyzePlayer::dispatch($this->user);
-
         $this->user->queued_at = null;
         $this->user->fetched_at = Carbon::now();
         $this->user->save();
+
+        $this->user->analyze();
     }
 }

@@ -21,6 +21,7 @@ trait PlayerProcessing
 
         $unprocessedMatches = $this->matches()
             ->select('id', 'processed_at', 'original')
+            ->whereNotNull('original')
             ->where(function ($q) use ($changed) {
                 $q->whereNull('processed_at')
                     ->orWhere('processed_at', '<', $changed);
@@ -35,8 +36,10 @@ trait PlayerProcessing
     /**
      * @return void
      */
-    public function process()
+    public function analyze()
     {
+        $this->analyzeMatches();
+
         $changed = Carbon::createFromTimestamp((int) $this->getSetting('valorant.match_analyzer_changed', 0))
             ->toDateTimeString();
 

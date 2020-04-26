@@ -56,7 +56,7 @@ class Match extends Model
      */
     public function analyze()
     {
-        $analyzer = new MatchAnalyzer($this->original);
+        $analyzer = new MatchAnalyzer($this->getAttributeValue('original'));
 
         $this->stats = $analyzer->toArray();
         $this->processed_at = Carbon::now();

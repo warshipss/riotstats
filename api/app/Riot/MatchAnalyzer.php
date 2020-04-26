@@ -42,12 +42,12 @@ class MatchAnalyzer
     {
         $versus = [];
         $uids = collect($this->original->players)
-            ->map(function ($player) {
-                return $player->uid;
+            ->mapWithKeys(function ($player) {
+                return [$player->subject => 0];
             });
 
-        foreach ($uids as $uid) {
-            $versus[$uid] = $uids->except($uid)->toArray();
+        foreach ($uids as $uid => $arr) {
+            $versus[$uid] = $uids->toArray();
         }
 
         if (! $this->original->kills) {
