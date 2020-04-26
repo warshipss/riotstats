@@ -68,7 +68,7 @@ class FetchMatch implements ShouldQueue
 
         $ids = $this->getInternalIds($response->players);
 
-        $this->match->original = json_encode($response);
+        $this->match->original = $response;
         $this->match->save();
 
         $this->match->users()->sync(array_values($ids));
