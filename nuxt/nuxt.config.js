@@ -32,6 +32,7 @@ export default {
 
     script: [
       { src: 'https://platform.twitter.com/widgets.js' },
+      { src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', 'data-ad-client': 'ca-pub-1470478687013356', async: true },
     ]
   },
 
