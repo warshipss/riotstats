@@ -2,13 +2,13 @@ import Cookie from 'js-cookie'
 import CookieParser from 'cookie'
 import { parse } from 'accept-language-parser'
 
-const matchBrowserLocale = (locales, supported) => {
+const matchBrowserLocale = (locales, supportedLocales) => {
   for (const locale of locales)
   {
-    for (const l of supported)
+    for (const supported of supportedLocales)
     {
-      if (new RegExp(l.match).test(locale)) {
-        return locale.substr(0, 2)
+      if (new RegExp(supported.match).test(locale)) {
+        return supported.code
       }
     }
   }
