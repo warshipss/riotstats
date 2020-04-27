@@ -72,7 +72,14 @@ class UpdatePlayer implements ShouldQueue
 
         while (! $flag)
         {
-            $matches = $api->getMatchHistory($this->user->uid, $offset, $offset + $perPage);
+            try {
+                $matches = $api->getMatchHistory($this->user->uid, $offset, $offset + $perPage);
+            } catch (\Exception $e) {
+                $this->user->fetched_at = Carbon::now();
+                $this->user->save();
+
+                break;
+            }
 
             foreach ($matches->History as $match)
             {

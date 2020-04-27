@@ -32,7 +32,7 @@
           </div>
 
           <div class="match__meta-item">
-            <i class="icon-clock" /> {{ ago(match) }}
+            <i class="icon-clock" /> {{ $agoUnix(match.started_at) }}
           </div>
 
           <div class="match__meta-item" v-if="squadSize > 1 && matchClass !== 'custom'">
@@ -180,7 +180,6 @@
 </template>
 
 <script>
-  import moment from 'moment'
   import { orderBy, keyBy, groupBy } from 'lodash'
 
   export default
@@ -208,12 +207,6 @@
     methods: {
       isEven (player) {
         return player.team === 'Blue'
-      },
-
-      ago (match) {
-        moment.locale(this.$i18n.locale)
-
-        return moment.unix(match.started_at).fromNow()
       },
 
       totalCasts(casts) {

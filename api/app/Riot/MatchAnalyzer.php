@@ -54,8 +54,11 @@ class MatchAnalyzer
             return $versus;
         }
 
-        foreach ($this->original->kills as $kill) {
-            $versus[$kill->killer][$kill->victim]++;
+        foreach ($this->original->kills as $kill)
+        {
+            if ($kill->killer && $kill->victim) {
+                $versus[$kill->killer][$kill->victim]++;
+            }
         }
 
         return $versus;
@@ -96,6 +99,7 @@ class MatchAnalyzer
                     '4k' => 0,
                     '5k' => 0,
                 ],
+                'weapons' => [],
                 'damage' => $damage,
                 'team' => $player->teamId,
                 'party' => $player->partyId,
@@ -106,7 +110,6 @@ class MatchAnalyzer
                 'casts' => $this->getCasts($player),
                 'assists' => $player->stats->assists,
                 'rounds' => $player->stats->roundsPlayed,
-                'weapons' => $this->getByWeapon($player->subject),
             ];
         }
 
@@ -131,6 +134,20 @@ class MatchAnalyzer
             {
                 $count = $kills->count();
 
+                foreach ($kills as $kill)
+                {
+                    $weapon = mb_strtolower($kill->finishingDamage->damageItem);
+
+                    if ($weapon)
+                    {
+                        if (! isset($players[$kill->killer]['weapons'][$weapon])) {
+                            $players[$kill->killer]['weapons'][$weapon] = 0;
+                        }
+
+                        $players[$kill->killer]['weapons'][$weapon]++;
+                    }
+                }
+
                 if ($count >= 3 && $count <= 5) {
                     $players[$killer]['multi'][$count . 'k']++;
                 }
@@ -138,33 +155,6 @@ class MatchAnalyzer
         }
 
         return $players;
-    }
-
-    /**
-     * @param $killer
-     *
-     * @return array
-     */
-    protected function getByWeapon($killer)
-    {
-        $weapons = [];
-
-        foreach ($this->original->kills as $kill)
-        {
-            if ($kill->killer !== $killer) {
-                continue;
-            }
-
-            $item = mb_strtolower($kill->finishingDamage->damageItem);
-
-            if (! isset($weapons[$item])) {
-                $weapons[$item] = 0;
-            }
-
-            $weapons[$item]++;
-        }
-
-        return $weapons;
     }
 
     /**

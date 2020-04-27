@@ -2,8 +2,8 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -13,7 +13,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        SoftException::class,
     ];
 
     /**
@@ -50,13 +50,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if (config('app.env') === 'production')
+        if ($exception instanceof SoftException)
         {
             return response()->json([
                 'error' => $exception->getMessage(),
-            ]);
+            ], 200);
         }
 
-        return parent::render($request, $exception);
+        return response()->json([
+            'error' => 'SERVER_ERROR',
+        ], 500);
     }
 }

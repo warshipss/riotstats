@@ -16,3 +16,20 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .icon {
   margin-right: .5rem;
 }
+
+.toasted {
+  font-size: .75rem;
+  text-transform: uppercase;
+  border-radius: 0 !important;
+  font-weight: 700 !important;
+  padding: 1rem 2rem !important;
+
+  &.error {
+    background: $primary !important;
+  }
+
+  &.info {
+    color: $body-color !important;
+    background: $body-bg !important;
+  }
+}
