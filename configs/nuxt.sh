@@ -12,10 +12,7 @@ if [[ "$env" == "dev" ]]; then
 
 else
 
-    (
-        yarn install --production \
-        && yarn run build
-    )
+    (yarn install --production)
 
     exec yarn run start
 
