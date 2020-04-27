@@ -5,6 +5,12 @@ set -e
 env=${APP_ENV:-production}
 role=${CONTAINER_ROLE:-fpm}
 
+if [[ "$env" == "dev" ]]; then
+  (cp /etc/php.ini-dev $PHP_INI_DIR/php.ini)
+else
+  (cp /etc/php.ini-prod $PHP_INI_DIR/php.ini)
+fi;
+
 if [[ "$role" == "queue" ]]; then
 
     exec php /app/artisan horizon

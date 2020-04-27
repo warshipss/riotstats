@@ -60,8 +60,19 @@ class PlayerController extends Controller
     public function show(Request $request)
     {
         $user = $this->searchUser($request);
+        $page = $request->get('page', 1);
 
-        return $this->getProfile($user, $request->get('page', 1));
+        $profile = cache()->get($user->getCacheKey($page));
+
+        if ($profile) {
+            return $profile;
+        }
+
+        $profile = $this->getProfile($user, $page);
+
+        cache()->set($user->getCacheKey($page), $profile);
+
+        return $profile;
     }
 
     /**
