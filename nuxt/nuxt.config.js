@@ -8,7 +8,7 @@ export default {
   },
 
   head: {
-    titleTemplate: '%s — RiotStats.com',
+    titleTemplate: '%s — RIOTSTATS',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -63,6 +63,7 @@ export default {
   modules: [
     'nuxt-i18n',
     '@nuxtjs/auth',
+    '@nuxtjs/toast',
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
     'bootstrap-vue/nuxt',
@@ -73,6 +74,12 @@ export default {
     middleware: [
       'locale'
     ],
+  },
+
+  toast: {
+    duration: 5000,
+    singleton: true,
+    position: 'top-right',
   },
 
   i18n: {

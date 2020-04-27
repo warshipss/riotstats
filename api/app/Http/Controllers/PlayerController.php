@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
-use App\Jobs\AnalyzeMatch;
 use App\Jobs\UpdatePlayer;
 use Illuminate\Http\Request;
 use App\Features\PlayerProcessing;
@@ -23,7 +23,7 @@ class PlayerController extends Controller
     {
         $term = $request->get('term');
 
-        $users = User::where('nickname', 'like', $term . '%')
+        $users = User::where('nickname', 'ilike', $term . '%')
             ->select('uid', 'nickname', 'tag')
             ->limit(15)
             ->get();
@@ -34,36 +34,41 @@ class PlayerController extends Controller
     /**
      * @param Request $request
      *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return string
+     * @throws \App\Exceptions\SoftException
      */
     public function update(Request $request)
     {
-        $term = $request->get('term');
+        $user = User::where('uid', $request->get('id'))
+            ->firstOrFail();
 
-        $users = User::where('nickname', 'like', $term . '%')
-            ->select('uid', 'nickname', 'tag')
-            ->limit(15)
-            ->get();
+        if ($user->fetched_at && $user->fetched_at->gt(Carbon::now()->subMinutes(20))) {
+            $this->fail('FETCHED_RECENTLY');
+        }
 
-        return ShortProfile::collection($users);
+        UpdatePlayer::dispatch($user);
+
+        return 'OK';
     }
 
     /**
      * @param Request $request
      *
-     * @return PlayerProfile|string[]
+     * @return PlayerProfile
+     * @throws \App\Exceptions\SoftException
      */
     public function show(Request $request)
     {
         $user = $this->searchUser($request);
 
-        return $this->getProfile($user, 1);
+        return $this->getProfile($user, $request->get('page', 1));
     }
 
     /**
      * @param Request $request
      *
-     * @return PlayerProfile|string[]
+     * @return PlayerProfile
+     * @throws \App\Exceptions\SoftException
      */
     public function short(Request $request)
     {
@@ -75,7 +80,8 @@ class PlayerController extends Controller
     /**
      * @param Request $request
      *
-     * @return mixed
+     * @return User
+     * @throws \App\Exceptions\SoftException
      */
     protected function searchUser(Request $request)
     {
@@ -83,7 +89,7 @@ class PlayerController extends Controller
         $nickname = $request->get('nickname');
 
         if ($tag === null || $nickname === null) {
-            abort(406, 'INVALID_INPUT');
+            $this->fail('INVALID_INPUT');
         }
 
         $user = User::where('nickname', $nickname)
@@ -95,7 +101,7 @@ class PlayerController extends Controller
             $user = $this->findExact($nickname, $tag);
 
             if (! $user) {
-                abort(404, 'NOT_FOUND');
+                $this->fail('NOT_FOUND');
             }
 
             UpdatePlayer::dispatch($user);
@@ -108,7 +114,8 @@ class PlayerController extends Controller
      * @param User $user
      * @param bool $page
      *
-     * @return PlayerProfile|string[]
+     * @return PlayerProfile
+     * @throws \App\Exceptions\SoftException
      */
     protected function getProfile(User $user, $page = false)
     {
@@ -116,7 +123,7 @@ class PlayerController extends Controller
         {
             UpdatePlayer::dispatch($user);
 
-            return ['error' => 'NOT_FETCHED_YET'];
+            $this->fail('NOT_FETCHED_YET');
         }
 
         $user->analyzeMatches();

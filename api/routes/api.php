@@ -15,4 +15,6 @@ $g('player', function (Router $r) {
     $r->get('short', 'PlayerController@short');
     $r->get('profile', 'PlayerController@show');
     $r->get('search', 'PlayerController@search');
+
+    $r->post('update', 'PlayerController@update');
 });

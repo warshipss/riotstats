@@ -28,8 +28,13 @@ trait PlayerProcessing
             })
             ->get();
 
-        foreach ($unprocessedMatches as $match) {
-            $match->analyze();
+        foreach ($unprocessedMatches as $match)
+        {
+            try {
+                $match->analyze();
+            } catch (\Exception $e) {
+                app('log')->error('Cant analyze match #' . $match->id . ': ' . $e->getMessage() . ' at ' . $e->getFile() . ':' . $e->getLine());
+            }
         }
     }
 
@@ -62,7 +67,7 @@ trait PlayerProcessing
      * @param $nickname
      * @param $tag
      *
-     * @return bool
+     * @return User|null
      */
     public function findExact($nickname, $tag)
     {
@@ -74,7 +79,7 @@ trait PlayerProcessing
         $uid = $api->getUid($nickname, $tag);
 
         if (! isset($uid->uid)) {
-            return false;
+            return null;
         }
 
         $user = User::firstOrCreate(['uid' => $uid->uid]);

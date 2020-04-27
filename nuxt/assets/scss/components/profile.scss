@@ -1,23 +1,55 @@
 .profile {
   $n: &;
 
+  &__head-container {
+    display: flex;
+    margin-bottom: 2rem;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  &__meta {
+    display: flex;
+    font-size: .8rem;
+    margin-left: 2rem;
+    flex-direction: column;
+    color: transparentize($body-color, .3);
+  }
+
+  &__action {
+    line-height: 1rem;
+    font-size: 1.75rem;
+    margin-right: .5rem;
+    color: lighten($body-color, 10%);
+
+    .icon {
+      margin: 0;
+
+      &:before {
+        margin: 0;
+        text-align: left;
+      }
+    }
+  }
+
   &__stats {
-    @extend .row;
+    display: flex;
+    justify-content: space-between;
 
     &:not(:last-of-type) {
       margin-bottom: 1rem;
     }
 
     .stat {
-      @extend .col, .col-md-4;
+      padding: 0 .5rem;
     }
   }
 
   &__nickname {
+    margin: 0;
     font-size: 4rem;
     line-height: 3rem;
     position: relative;
-    margin-bottom: 2rem;
     text-transform: none;
   }
 

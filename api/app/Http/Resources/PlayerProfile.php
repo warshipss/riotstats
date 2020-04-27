@@ -19,7 +19,7 @@ class PlayerProfile extends JsonResource
             'tag' => $this->tag,
             'stats' => $this->stats,
             'nickname' => $this->nickname,
-            'updated_at' => $this->updated_at,
+            'updated_at' => $this->processed_at,
             'matches' => Match::collection($this->whenLoaded('matches')),
         ];
     }

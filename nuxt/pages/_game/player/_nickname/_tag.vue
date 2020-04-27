@@ -1,6 +1,26 @@
 <template>
   <div class="profile">
-    <h1 class="profile__nickname">{{ profileTitle }}</h1>
+    <div class="profile__head-container">
+      <h1 class="profile__nickname">
+        {{ profileTitle }}
+      </h1>
+
+      <div class="profile__meta" v-if="profile">
+        <div class="profile__actions">
+          <a href="#" class="profile__action profile__action_update"
+             :title="$t('Update')" v-b-tooltip.hover @click.prevent="update">
+            <i class="icon icon-update" />
+          </a>
+
+          <a href="#" class="profile__action profile__action_track"
+             :title="$t('Track this player')" v-b-tooltip.hover @click.prevent="track" v-if="false">
+            <i class="icon icon-star-o" />
+          </a>
+        </div>
+
+        <span class="profile__meta-text">{{ $t('Updated') }}: {{ $ago(profile.updated_at) }}</span>
+      </div>
+    </div>
 
     <h3 v-if="error && error === 'NOT_FETCHED_YET'">
       <i class="icon icon-spin animate-spin" /> {{ $t('Data is updating') }}...
@@ -61,17 +81,17 @@
               </div>
 
               <div class="stat">
+                <div class="stat__value">{{ Math.floor(last.damage / last.rounds) }}</div>
+                <div class="stat__label">{{ $t('Avg. damage') }}</div>
+              </div>
+
+              <div class="stat">
                 <div class="stat__value">{{ Math.floor(last.score / last.rounds) }}</div>
                 <div class="stat__label">{{ $t('Combat score') }}</div>
               </div>
             </div>
 
             <div class="profile__stats">
-              <div class="stat">
-                <div class="stat__value">{{ Math.floor(last.damage / last.rounds) }}</div>
-                <div class="stat__label">{{ $t('Avg. damage') }}</div>
-              </div>
-
               <div class="stat">
                 <div class="stat__value">{{ (last.kills / last.deaths).toFixed(2) }}</div>
                 <div class="stat__label">{{ $t('Kills / Deaths') }}</div>
@@ -81,7 +101,7 @@
         </div>
 
         <div class="col col-md-4">
-          <div class="profile__card profile__card_agent">
+          <div class="profile__card profile__card_agent" v-if="bestAgent">
             <img :src="$agentImage(bestAgent.uid, 'profile')" class="profile__agent" />
             <h2 class="profile__card-title">{{ $t('Agent') }} — {{ $getAgent(bestAgent.uid).slug }}</h2>
 
@@ -123,7 +143,7 @@
         <match :match="match" :current="profile.uid" :key="match.uid" v-for="match of profile.matches" />
       </div>
 
-      <a href="#" class="matches__more" @click.prevent="loadMore" v-if="total > page * perPage">
+      <a href="#" class="matches__more" @click.prevent="loadMatches" v-if="total > page * perPage">
         {{ $t('Load more') }}
       </a>
     </template>
@@ -182,6 +202,39 @@
       }
     },
 
+    methods: {
+      async update() {
+        const { data } = await this.$axios.post('/player/update', {
+          id: this.profile.uid,
+        })
+
+        if (data.hasOwnProperty('error')) {
+          return this.$toast.error(this.$t('Player was recently updated'))
+        }
+
+        if (data === 'OK') {
+          this.$toast.info(this.$t('Player is queued for update'))
+        }
+      },
+
+      async track() {
+
+      },
+
+      async loadMatches() {
+        const { data } = await this.$axios.get('/player/profile', {
+          params: {
+            page: this.page + 1,
+            tag: this.profile.tag,
+            nickname: this.profile.nickname,
+          }
+        })
+
+        this.page++
+        this.profile.matches.push(...data.data.matches)
+      },
+    },
+
     computed: {
       profileTitle () {
         return this.$route.params.nickname + ' #' + this.$route.params.tag
@@ -214,7 +267,7 @@
           }
         }
 
-        return {}
+        return null
       }
     }
   }

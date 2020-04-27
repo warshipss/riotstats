@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import moment from 'moment'
 import { mapState } from 'vuex'
 
 export default Vue.mixin({
@@ -57,6 +58,20 @@ export default Vue.mixin({
       }
 
       return {}
+    },
+
+    $ago (time) {
+      moment.locale(this.$i18n.locale)
+
+      if (typeof time === 'string') {
+        return moment.utc(time).fromNow()
+      }
+
+      return moment.utc(time).fromNow()
+    },
+
+    $agoUnix (time) {
+      return this.$ago(moment.unix(time))
     }
   },
 

@@ -24,7 +24,7 @@
 
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a href="#" class="nav-link nav-link_language" v-b-modal="'language'">
+          <a href="#" class="nav-link nav-link_language" @click.prevent v-b-modal="'language'">
             <i class="icon icon-globe" /> {{ $locale.title }}
           </a>
         </li>
