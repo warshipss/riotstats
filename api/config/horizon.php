@@ -101,10 +101,10 @@ return [
     'trim' => [
         'recent' => 60,
         'pending' => 60,
+        'failed' => 1440,
         'completed' => 60,
-        'recent_failed' => 10080,
-        'failed' => 10080,
         'monitored' => 10080,
+        'recent_failed' => 1440,
     ],
 
     /*
@@ -151,7 +151,7 @@ return [
     |
     */
 
-    'memory_limit' => 8192,
+    'memory_limit' => 24576,
 
     /*
     |--------------------------------------------------------------------------
@@ -167,11 +167,11 @@ return [
     'environments' => [
         'production' => [
             'supervisor-1' => [
-                'connection' => 'redis',
-                'queue' => ['default'],
-                'balance' => 'auto',
-                'processes' => 10,
                 'tries' => 1,
+                'processes' => 16,
+                'balance' => 'auto',
+                'queue' => ['default'],
+                'connection' => 'redis',
             ],
         ],
 

@@ -1,13 +1,10 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark">
+  <nav class="navbar navbar-expand-md navbar-dark">
     <nuxt-link :to="localePath('index')" class="navbar-brand" href="#">RiotStats</nuxt-link>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <b-collapse id="nav-collapse" is-nav>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <nuxt-link :to="$gamePath('valorant', 'leaderboard')" class="nav-link">
@@ -29,6 +26,6 @@
           </a>
         </li>
       </ul>
-    </div>
+    </b-collapse>
   </nav>
 </template>

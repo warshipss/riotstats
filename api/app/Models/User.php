@@ -54,6 +54,16 @@ class User extends Authenticatable
 
     /**
      * @param int $page
+     *
+     * @return string
+     */
+    public function getCacheKey($page = 1)
+    {
+        return "profile:{$this->uid}:${page}";
+    }
+
+    /**
+     * @param int $page
      * @param int $limit
      *
      * @return \Illuminate\Database\Eloquent\Collection
@@ -66,6 +76,7 @@ class User extends Authenticatable
             ->with('users')
             ->whereNotNull('processed_at')
             ->orderBy('started_at', 'desc')
+            ->select('uid', 'stats', 'started_at')
             ->get();
 
         $this->setRelation('matches', $matches);

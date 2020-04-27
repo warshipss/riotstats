@@ -11,7 +11,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && pecl install redis \
     && docker-php-ext-enable redis
 
-COPY ./configs/php.ini $PHP_INI_DIR/php.ini
+COPY ./configs/php.ini-dev /etc
+COPY ./configs/php.ini-prod /etc
 
 COPY ./configs/php.sh /usr/local/bin/
 COPY ./configs/crontab /etc/crontab

@@ -122,5 +122,7 @@ class UpdatePlayer implements ShouldQueue
         $this->user->save();
 
         $this->user->analyze();
+
+        cache()->delete($this->user->getCacheKey());
     }
 }

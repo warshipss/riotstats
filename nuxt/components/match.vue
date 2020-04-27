@@ -3,30 +3,30 @@
     <div v-b-toggle="match.uid" :class="'match__trigger match__trigger_' + matchClass">
       <div class="match__agent" :style="{ 'background-image': 'url(' + $agentImage(player.agent, 'profile') + ')' }"></div>
 
-      <div class="row">
-        <div class="col col-md-2 stat">
+      <div class="match__row">
+        <div class="match__stat match__stat_score">
           <div class="stat__value">{{ Math.floor(player.score / player.rounds) }}</div>
           <div class="stat__label">{{ $t('Combat score') }}</div>
         </div>
 
-        <div class="col col-md-2 stat">
+        <div class="match__stat match__stat_damage">
           <div class="stat__value">{{ Math.floor(player.damage / player.rounds) }}</div>
           <div class="stat__label">{{ $t('Avg. damage') }}</div>
         </div>
 
-        <div class="col col-md-3 match__result">
+        <div class="match__result">
           <div class="match__result-label">{{ resultTitle }}</div>
           <div class="match__score">
             {{ score.home }} &dash; {{ score.away }}
           </div>
         </div>
 
-        <div class="col col-md-2 stat">
+        <div class="match__stat match__stat_kda">
           <div class="stat__value">{{ player.kills + ' / ' + player.deaths + ' / ' + player.assists }}</div>
           <div class="stat__label">KDA</div>
         </div>
 
-        <div class="col col-md-3 match__meta">
+        <div class="match__meta">
           <div class="match__meta-item">
             <i class="icon-map" /> {{ $t('Map') }}: {{ $getMap(match.stats.map).slug }}
           </div>

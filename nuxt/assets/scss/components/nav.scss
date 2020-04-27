@@ -1,9 +1,19 @@
+.navbar-expand-lg .navbar-nav .nav-link {
+  padding: 0 3rem;
+}
+
 .navbar {
   padding: 0;
   background: #111;
   border-bottom: 2px solid rgba(51, 51, 51, 0.25);
 
-  .nav-link {
+  &-toggler {
+    border: none;
+    margin-right: 1rem;
+    outline: none !important;
+  }
+
+  &-nav .nav-link {
     height: 5rem;
     display: flex;
     font-weight: 500;
@@ -11,10 +21,15 @@
     align-items: center;
     color: #fff !important;
     text-transform: uppercase;
-    padding: 0 1rem !important;
+    padding: 0 3rem !important;
+
+    @include media-breakpoint-up('sm') {
+      padding: 0 1rem !important;
+    }
 
     &_language {
       font-weight: bold;
+      margin-right: 1rem;
       text-transform: none;
 
       .icon {
