@@ -61,7 +61,5 @@ class Match extends Model
         $this->stats = $analyzer->toArray();
         $this->processed_at = Carbon::now();
         $this->save();
-
-        $this->users()->touch();
     }
 }
