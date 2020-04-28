@@ -104,12 +104,12 @@ class MatchAnalyzer
                 'team' => $player->teamId,
                 'party' => $player->partyId,
                 'agent' => $player->characterId,
-                'score' => $player->stats->score,
-                'kills' => $player->stats->kills,
-                'deaths' => $player->stats->deaths,
                 'casts' => $this->getCasts($player),
-                'assists' => $player->stats->assists,
-                'rounds' => $player->stats->roundsPlayed,
+                'score' => $player->stats->score || 0,
+                'kills' => $player->stats->kills || 0,
+                'deaths' => $player->stats->deaths || 0,
+                'assists' => $player->stats->assists || 0,
+                'rounds' => $player->stats->roundsPlayed || 0,
             ];
         }
 
