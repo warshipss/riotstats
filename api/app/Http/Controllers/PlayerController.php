@@ -42,6 +42,8 @@ class PlayerController extends Controller
         $user = User::where('uid', $request->get('id'))
             ->firstOrFail();
 
+        cache()->delete($user->getCacheKey());
+
         if ($user->fetched_at && $user->fetched_at->gt(Carbon::now()->subMinutes(20))) {
             $this->fail('FETCHED_RECENTLY');
         }
@@ -69,8 +71,9 @@ class PlayerController extends Controller
         }
 
         $profile = $this->getProfile($user, $page);
+        $cacheTime = config('app.env') === 'dev' ? 0 : Carbon::now()->addMinutes(20);
 
-        cache()->set($user->getCacheKey($page), $profile);
+        cache()->set($user->getCacheKey($page), $profile, $cacheTime);
 
         return $profile;
     }

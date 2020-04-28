@@ -72,11 +72,11 @@ class User extends Authenticatable
     {
         $matches = $this->matches()
             ->limit($limit)
-            ->offset(($page - 1) * $limit)
             ->with('users')
+            ->offset(($page - 1) * $limit)
             ->whereNotNull('processed_at')
             ->orderBy('started_at', 'desc')
-            ->select('uid', 'stats', 'started_at')
+            ->select('id', 'uid', 'stats', 'started_at')
             ->get();
 
         $this->setRelation('matches', $matches);
