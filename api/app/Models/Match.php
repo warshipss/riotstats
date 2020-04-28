@@ -58,8 +58,11 @@ class Match extends Model
     {
         $analyzer = new MatchAnalyzer($this->getAttributeValue('original'));
 
-        $this->stats = $analyzer->toArray();
+        $stats = $analyzer->toArray();
+
+        $this->stats = $stats;
         $this->processed_at = Carbon::now();
+        $this->is_custom = $stats['type'] === 'custom';
         $this->save();
     }
 }

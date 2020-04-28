@@ -49,9 +49,9 @@ trait PlayerProcessing
             ->toDateTimeString();
 
         $processedMatches = $this->matches()
+            ->where('is_custom', false)
             ->whereNotNull('processed_at')
             ->orderBy('started_at', 'desc')
-            ->where('stats->type', 'matchmaking')
             ->select('id', 'stats', 'processed_at')
             ->where('processed_at', '>', $changed)
             ->get();

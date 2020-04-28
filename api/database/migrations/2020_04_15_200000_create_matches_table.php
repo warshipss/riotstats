@@ -25,6 +25,7 @@ class CreateMatchesTable extends Migration
             $table->uuid('uid')->index();
             $table->jsonb('stats')->nullable();
             $table->jsonb('original')->nullable();
+            $table->boolean('is_custom')->default(1);
 
             $table->timestamp('processed_at')->nullable();
             $table->timestamp('started_at')->nullable();
