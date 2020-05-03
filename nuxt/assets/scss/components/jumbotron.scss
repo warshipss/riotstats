@@ -5,8 +5,19 @@
   border-radius: 0;
   position: relative;
   align-items: center;
+  background: transparent;
   justify-content: center;
-  background: url('/img/jumbo.png') no-repeat left bottom / cover;
+
+  &__background {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: ' ';
+    position: absolute;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+    background: url('/img/jumbo.jpg') no-repeat center -12rem / cover;
+  }
 
   &__title {
     color: $body-bg;

@@ -1,11 +1,16 @@
 .stat {
   &__value {
+    color: #fff;
     font-weight: bold;
     font-size: 1.25rem;
+    font-family: var(--headings-font-family);
   }
 
   &__label {
     font-weight: 500;
     font-size: .75rem;
+    text-transform: uppercase;
+    color: var(--surface-color);
+    font-family: var(--headings-font-family);
   }
 }

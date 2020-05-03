@@ -69,11 +69,14 @@
   &__score {
     font-size: 2rem;
     font-weight: bold;
+    font-family: var(--brand-font-family);
   }
 
   &__result-label {
-    font-size: .9rem;
+    font-weight: bold;
     text-transform: uppercase;
+    color: var(--surface-color);
+    font-family: var(--headings-font-family);
   }
 
   &__table {
@@ -99,22 +102,22 @@
   &__details {
     @extend .table-responsive;
 
-    background: #fff;
+    padding: 0 2rem;
     border-radius: 0;
     margin-bottom: 1rem;
+    background: transparent;
     border: 1px solid rgba(15, 25, 35, .5);
   }
 
   &__details-btn {
-    right: 0;
+    top: .5rem;
     width: 2rem;
+    right: .5rem;
     display: flex;
-    top: -0.0625rem;
     position: absolute;
     align-items: center;
     justify-content: center;
-    height: calc(100% + .125rem);
-    background: darken($body-bg, 10%);
+    height: calc(100% - .5rem);
   }
 
   &__details-img {
@@ -125,6 +128,8 @@
   }
 
   &__trigger {
+    @include clip(1rem);
+
     width: 100%;
     z-index: 1;
     height: 5rem;
@@ -132,12 +137,11 @@
     overflow: hidden;
     position: relative;
     padding: 0 2rem 0 0;
+    margin-bottom: 1rem;
     align-items: center;
     flex-direction: row;
+    background: var(--surface-bg);
     justify-content: space-between;
-    border: 1px solid rgba(15, 25, 35, .5);
-    border-right: none;
-
     transition: height .3s ease-in-out, border-color .3s ease-in-out;
 
     &:not(.collapsed) {
@@ -149,60 +153,11 @@
     &:hover {
       cursor: pointer;
       border-color: #0f1923;
-
-      &:after {
-        transform: translateX(0) skew(-10deg);
-      }
-    }
-
-    &:after {
-      top: 0;
-      left: -5%;
-      opacity: 1;
-      z-index: -1;
-      width: 120%;
-      content: "";
-      height: 100%;
-      display: block;
-      position: absolute;
-      background: darken($body-bg, 5%);
-      transition: transform .3s ease-out;
-      transform: translateX(-100%) skew(-10deg);
     }
 
     .row {
       flex-grow: 1;
       align-items: center;
-    }
-
-    &_defeat {
-      &:hover {
-        color: $body-bg;
-        border-color: #0f1923;
-      }
-
-      &:after {
-        background: #0f1923;
-      }
-
-      #{$n}__details-btn {
-        background: #0f1923;
-      }
-    }
-
-    &_victory {
-      &:hover {
-        color: $body-bg;
-        border-color: $primary;
-      }
-
-      &:after {
-        background: $primary;
-      }
-
-      #{$n}__details-btn {
-        background: $primary;
-      }
     }
   }
 }

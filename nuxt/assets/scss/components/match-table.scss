@@ -2,6 +2,14 @@
   @extend .table;
 
   margin: 0;
+  border-spacing: 0 1rem;
+  border-collapse: separate;
+
+  tr {
+    @include clip;
+
+    background: var(--surface-bg);
+  }
 
   tbody td, thead th {
     border-top: none;
@@ -10,7 +18,7 @@
   }
 
   td {
-    color: #666;
+    color: darken(#fff, 25%);
   }
 
   &__nickname-cell {
@@ -47,12 +55,13 @@
 
   &__groups {
     th {
-      color: #999;
       padding: .25rem;
-      background: #fff;
       font-weight: 500;
       font-size: .75rem;
       text-align: center;
+      text-transform: uppercase;
+      color: var(--surface-color);
+      background: var(--surface-bg);
     }
   }
 
@@ -65,16 +74,16 @@
       width: 3rem;
       padding: .5rem;
       text-align: center;
-      background: $body-bg;
-      border-bottom: 2px solid darken($body-bg, 5%);
+      background: var(--surface-bg);
+      border-bottom: 2px solid var(--surface-bg);
     }
   }
 
   &__nickname {
-    color: #555;
-    font-size: .9rem;
+    color: #fff;
     font-weight: 700;
     transition: color 500ms ease;
+    font-family: var(--headings-font-family);
 
     &:hover {
       color: $primary;
@@ -83,10 +92,10 @@
   }
 
   &__stat-name {
+    color: #fff;
     font-weight: 700;
-    color: $body-color;
-    font-size: .875rem;
-    border-bottom: 1px dotted rgb(85, 86, 85);
+    font-family: var(--brand-font-family);
+    border-bottom: 1px dotted var(--surface-color);
 
     &:hover {
       color: #333;
@@ -96,7 +105,7 @@
 
   &__stat-value {
     font-weight: bold;
-    font-size: .875rem;
     text-align: center;
+    font-family: var(--brand-font-family);
   }
 }

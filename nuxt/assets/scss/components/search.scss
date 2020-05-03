@@ -3,13 +3,16 @@
     margin: 0;
     font-weight: bold;
     padding: 1rem 2rem;
+    transition: 500ms all ease;
+    background: var(--body-bg);
+    color: var(--surface-color);
   }
 
   &__dropdown-toggle {
     border: none;
     padding: 0;
-    background: #fff;
     border-radius: 0;
+    background: #140c1a;
   }
 
   &__dropdown-menu {
@@ -22,7 +25,8 @@
 
   &__dropdown-option {
     &--highlight {
-      background: $primary;
+      color: var(--body-color);
+      background: var(--surface-bg);
     }
   }
 
@@ -32,14 +36,15 @@
 
   &__search {
     margin: 0;
+    color: #fff;
     border: none;
     font-size: 1rem;
     padding: 0 2rem;
     height: 3.75rem;
     border-radius: 0;
-    background: #fff;
     font-weight: bold;
-    color: $body-color;
+    background: #140c1a;
+    clip-path: polygon(6% 0, 100% 0, 100% 100%, 0 100%, 0 32%);
 
     &:focus {
       margin: 0;
@@ -50,6 +55,7 @@
 
       &::placeholder {
         opacity: 0;
+        color: #6b54b6;
       }
     }
 

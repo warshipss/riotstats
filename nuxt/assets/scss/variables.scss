@@ -1,10 +1,10 @@
 //  @import "~bootstrap/scss/variables";
 
 $primary: #ff4655;
-$body-bg: #ece8e1;
-$body-color: #0f1923;
+$body-bg: var(--body-bg);
 $headings-font-weight: 900;
-$headings-font-family: 'Ruda', sans-serif;
+$body-color: var(--body-color);
+$headings-font-family: var(--headings-font-family);
 $font-family-sans-serif: 'Montserrat', sans-serif;
 
 $enable-rounded: false;
