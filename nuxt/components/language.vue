@@ -5,10 +5,12 @@
     </h5>
 
     <div class="language__list">
-      <a href="#" class="list-group-item list-group-item-action"
-         v-for="locale of $i18n.locales" :key="locale.code" @click.prevent="setLocale(locale)">
-        {{ locale.title }}
-      </a>
+      <div class="list-group-item" v-for="locale of $i18n.locales" :key="locale.code">
+        <a href="#" :class="[' list-group-item-action', { 'active': $i18n.locale === locale.code }]"
+           @click.prevent="setLocale(locale)">
+          {{ locale.title }}
+        </a>
+      </div>
     </div>
   </b-modal>
 </template>

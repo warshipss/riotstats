@@ -3,7 +3,7 @@
     &-content {
       border: none;
       border-radius: 0;
-      background: #e7e6e3 url('/img/lang-artwork.jpg') no-repeat top left / contain;
+      background: transparent;
     }
 
     &-dialog {
@@ -16,6 +16,7 @@
     }
 
     &-title {
+      font-size: 2.5rem;
       text-align: center;
     }
 
@@ -30,12 +31,23 @@
       padding: .5rem 0;
       font-weight: bold;
       text-align: center;
-      color: $body-color;
       background: transparent;
-      transition: color 500ms ease;
+      text-transform: uppercase;
 
-      &:hover {
-        color: $primary;
+      &-action {
+        font-size: 1.5rem;
+        color: $body-color;
+        transition: color 500ms ease;
+        font-family: var(--headings-font-family);
+
+        &:hover, &.active {
+          color: #6b54b6;
+          background: transparent;
+        }
+
+        &.active {
+          border-bottom: .125rem solid #6b54b6;
+        }
       }
     }
   }

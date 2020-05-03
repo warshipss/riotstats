@@ -4,6 +4,8 @@
       <v-header />
 
       <div class="jumbotron">
+        <div class="jumbotron__background"></div>
+
         <v-search />
       </div>
     </header>

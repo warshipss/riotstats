@@ -1,3 +1,37 @@
+:root {
+  --body-color: #fff;
+  --body-bg: #150f1a;
+  --surface-bg: #20132a;
+  --surface-color: #6b54b6;
+  --brand-font-family: 'Rajdhani', sans-serif;
+  --headings-font-family: 'Rajdhani', sans-serif;
+}
+
+::selection {
+  background: #6b54b6;
+  color: #1b0f23;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #7228e2 #0f0b12;
+}
+
+body {
+  &::-webkit-scrollbar {
+    width: .5rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #7228e2;
+    outline: #7228e2 solid 1px
+  }
+}
+
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   text-transform: uppercase;
 }
@@ -30,11 +64,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   padding: 1rem 2rem !important;
 
   &.error {
-    background: $primary !important;
+    background: var(--primary) !important;
   }
 
   &.info {
-    color: $body-color !important;
-    background: $body-bg !important;
+    color: var(--body-color) !important;
+    background: var(--info) !important;
   }
 }

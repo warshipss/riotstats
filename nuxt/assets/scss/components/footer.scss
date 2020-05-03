@@ -1,21 +1,35 @@
 footer {
-  color: #7e7e7e;
-  background: #111;
+  background: #100d12;
 }
 
 .footer {
-  padding: 2rem 0;
+  position: relative;
+  padding: 4rem 0 2rem 0;
+
+  &:before {
+    top: 0;
+    left: 0;
+    width: 100%;
+    content: '';
+    height: 1.5rem;
+    display: block;
+    position: absolute;
+    background-color: #150f1a;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
 
   p {
     margin: 0;
-    color: #666;
     font-size: .9rem;
+    text-transform: uppercase;
+    color: darken(#6b54b6, 10%);
+    font-family: var(--headings-font-family);
   }
 
   &__main {
     margin-bottom: 2rem;
     padding-bottom: 2rem;
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid var(--body-bg);
   }
 
   &__twitter {
