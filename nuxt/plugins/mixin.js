@@ -4,6 +4,10 @@ import { mapState } from 'vuex'
 
 export default Vue.mixin({
   methods: {
+    $ucfirst (s) {
+      return s.slice(0, 1).toUpperCase() + s.slice(1)
+    },
+
     $playerPath (game, nickname, tag) {
       if (! game) {
         game = this.$route.params.game

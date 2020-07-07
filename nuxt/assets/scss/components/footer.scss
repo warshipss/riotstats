@@ -1,22 +1,11 @@
 footer {
   background: #100d12;
+  clip-path: polygon(50% 2rem, 100% 0, 100% 100%, 0 100%, 0 0);
 }
 
 .footer {
   position: relative;
   padding: 4rem 0 2rem 0;
-
-  &:before {
-    top: 0;
-    left: 0;
-    width: 100%;
-    content: '';
-    height: 1.5rem;
-    display: block;
-    position: absolute;
-    background-color: #150f1a;
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-  }
 
   p {
     margin: 0;

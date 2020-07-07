@@ -12,7 +12,7 @@ services:
       backend:
       reverse:
         aliases:
-        - riotstats_nuxt
+          - overpeek_nuxt
     volumes:
       - ./nuxt:/app
 
@@ -23,7 +23,7 @@ services:
       backend:
       reverse:
         aliases:
-          - riotstats
+          - overpeek
     volumes:
       - ./api:/app
       - caddy-data:/root/.caddy
@@ -49,7 +49,7 @@ services:
       backend:
       reverse:
         aliases:
-          - riotstats_adminer
+          - overpeek_adminer
 
   redis:
     image: redis

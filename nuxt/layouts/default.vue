@@ -1,14 +1,6 @@
 <template>
   <div id="app">
-    <header>
-      <v-header />
-
-      <div class="jumbotron">
-        <div class="jumbotron__background"></div>
-
-        <v-search />
-      </div>
-    </header>
+    <v-header />
 
     <main class="layout">
       <a href="#" v-if="false">
@@ -37,13 +29,12 @@
 
   import VHeader from '~/components/header'
   import VFooter from '~/components/footer'
-  import VSearch from '~/components/search'
   import LanguageModal from '~/components/language'
 
   export default
   {
     mixins: [GlobalMixin],
-    components: { VHeader, VFooter, VSearch, LanguageModal },
+    components: { VHeader, VFooter, LanguageModal },
 
     head() {
       const keywords = [
