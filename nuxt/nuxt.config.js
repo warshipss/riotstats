@@ -7,16 +7,21 @@ export default {
     analyticsID: process.env.GA_ID,
   },
 
+  server: {
+    host: '0.0.0.0',
+  },
+
   head: {
-    titleTemplate: '%s — RIOTSTATS',
+    titleTemplate: '%s — Overpeek.com',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
 
       { property: 'og:type', content: 'website' },
-      { property: 'og:site_name', content: 'RIOTSTATS.COM' },
+      { property: 'og:site_name', content: 'Overpeek.com' },
       { property: 'og:image', content: `https://${process.env.APP_DOMAIN}/img/preview.jpg` },
+      { property: 'ads', content: 'Ads for sale / продается реклама, contact: Telegram - @alex_balatsky, Discord - Moontrance#8200' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -197,6 +202,18 @@ export default {
   */
   build: {
     optimizeCSS: {},
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          styles: {
+            name: 'styles',
+            test: /\.(css|vue)$/,
+            chunks: 'all',
+            enforce: true
+          }
+        }
+      }
+    },
 
     /*
     ** You can extend webpack config here

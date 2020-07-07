@@ -1,48 +1,55 @@
 <template>
   <div class="match">
-    <div v-b-toggle="match.uid" :class="'match__trigger match__trigger_' + matchClass">
-      <div class="match__agent" :style="{ 'background-image': 'url(' + $agentImage(player.agent, 'profile') + ')' }"></div>
+    <div class="match__trigger-wrapper" v-b-toggle="match.uid">
+      <div :class="'match__trigger match__trigger_' + matchClass + ' match__trigger_map-' + $getMap(match.stats.map).slug">
 
-      <div class="match__row">
-        <div class="match__stat match__stat_score">
-          <div class="stat__value">{{ Math.floor(player.score / player.rounds) }}</div>
-          <div class="stat__label">{{ $t('Combat score') }}</div>
-        </div>
+        <div class="match__agent" :style="{ 'background-image': 'url(' + $agentImage(player.agent, 'profile') + ')' }"></div>
 
-        <div class="match__stat match__stat_damage">
-          <div class="stat__value">{{ Math.floor(player.damage / player.rounds) }}</div>
-          <div class="stat__label">{{ $t('Avg. damage') }}</div>
-        </div>
+        <div class="match__row">
+          <div class="match__stat match__stat_score">
+            <div class="stat__value">{{ Math.floor(player.score / player.rounds) }}</div>
+            <div class="stat__label">{{ $t('Combat score') }}</div>
+          </div>
 
-        <div class="match__result">
-          <div class="match__result-label">{{ resultTitle }}</div>
-          <div class="match__score">
-            {{ score.home }} &dash; {{ score.away }}
+          <div class="match__stat match__stat_damage">
+            <div class="stat__value">{{ Math.floor(player.damage / player.rounds) }}</div>
+            <div class="stat__label">{{ $t('Avg. damage') }}</div>
+          </div>
+
+          <div class="match__result">
+            <div class="match__result-label">{{ resultTitle }}</div>
+            <div class="match__score">
+              {{ score.home }} &dash; {{ score.away }}
+            </div>
+          </div>
+
+          <div class="match__stat match__stat_kda">
+            <div class="stat__value">{{ player.kills + ' / ' + player.deaths + ' / ' + player.assists }}</div>
+            <div class="stat__label">KDA</div>
+          </div>
+
+          <div class="match__meta">
+            <img class="match__map" :src="'/img/maps/' + $getMap(match.stats.map).slug + '.png'" />
+
+            <div class="match__meta-content">
+              <div class="match__meta-item">
+                <i class="icon-map" /> {{ $t('Map') }}: {{ $getMap(match.stats.map).slug }}
+              </div>
+
+              <div class="match__meta-item">
+                <i class="icon-clock" /> {{ $agoUnix(match.started_at) }}
+              </div>
+
+              <div class="match__meta-item" v-if="squadSize > 1 && matchClass !== 'custom'">
+                <i class="icon-users-outline" /> {{ $t('Squad size') }}: {{ squadSize }}
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="match__stat match__stat_kda">
-          <div class="stat__value">{{ player.kills + ' / ' + player.deaths + ' / ' + player.assists }}</div>
-          <div class="stat__label">KDA</div>
+        <div class="match__details-btn">
+          <img class="match__details-img" src="/img/icons/arrow.svg" />
         </div>
-
-        <div class="match__meta">
-          <div class="match__meta-item">
-            <i class="icon-map" /> {{ $t('Map') }}: {{ $getMap(match.stats.map).slug }}
-          </div>
-
-          <div class="match__meta-item">
-            <i class="icon-clock" /> {{ $agoUnix(match.started_at) }}
-          </div>
-
-          <div class="match__meta-item" v-if="squadSize > 1 && matchClass !== 'custom'">
-            <i class="icon-users-outline" /> {{ $t('Squad size') }}: {{ squadSize }}
-          </div>
-        </div>
-      </div>
-
-      <div class="match__details-btn">
-        <img class="match__details-img" src="/img/icons/arrow.svg" />
       </div>
     </div>
 
@@ -61,76 +68,76 @@
           <tr class="match-table__stats">
             <th colspan="2"></th>
             <th class="match-table__first">
-              <a href="#" class="match-table__stat-name" :title="$t('Kills')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('Kills')" v-b-tooltip.hover
                  @click.prevent="sortBy('kills')">K</a>
             </th>
             <th>
-              <a href="#" class="match-table__stat-name" :title="$t('Deaths')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('Deaths')" v-b-tooltip.hover
                  @click.prevent="sortBy('deaths')">D</a>
             </th>
             <th>
-              <a href="#" class="match-table__stat-name" :title="$t('Assists')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('Assists')" v-b-tooltip.hover
                  @click.prevent="sortBy('assists')">A</a>
             </th>
             <th class="match-table__first">
-              <a href="#" class="match-table__stat-name" :title="$t('Kills to deaths ratio')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('Kills to deaths ratio')" v-b-tooltip.hover
                  @click.prevent="sortBy('kd')">K/D</a>
             </th>
             <th>
-              <a href="#" class="match-table__stat-name" :title="$t('Average kills per round')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('Average kills per round')" v-b-tooltip.hover
                  @click.prevent="sortBy('kr')">K/R</a>
             </th>
             <th>
-              <a href="#" class="match-table__stat-name" :title="$t('Average combat score per round')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('Average combat score per round')" v-b-tooltip.hover
                  @click.prevent="sortBy('score')">ACS</a>
             </th>
             <th>
-              <a href="#" class="match-table__stat-name" :title="$t('Average damage per round')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('Average damage per round')" v-b-tooltip.hover
                  @click.prevent="sortBy('damage')">ADR</a>
             </th>
 
             <th class="match-table__first">
-              <a href="#" class="match-table__stat-name" :title="$t('3 kills rounds')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('3 kills rounds')" v-b-tooltip.hover
                  @click.prevent="sortBy('3k')">3K</a>
             </th>
 
             <th>
-              <a href="#" class="match-table__stat-name" :title="$t('4 kills rounds')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('4 kills rounds')" v-b-tooltip.hover
                  @click.prevent="sortBy('4k')">4K</a>
             </th>
 
             <th>
-              <a href="#" class="match-table__stat-name" :title="$t('5 kills rounds')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('5 kills rounds')" v-b-tooltip.hover
                  @click.prevent="sortBy('5k')">Ace</a>
             </th>
 
             <th class="match-table__first">
-              <a href="#" class="match-table__stat-name" :title="$t('Entry kills')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('Entry kills')" v-b-tooltip.hover
                  @click.prevent="sortBy('ek')">EK</a>
             </th>
 
             <th>
-              <a href="#" class="match-table__stat-name" :title="$t('Entry deaths')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('Entry deaths')" v-b-tooltip.hover
                  @click.prevent="sortBy('ed')">ED</a>
             </th>
 
             <th>
-              <a href="#" class="match-table__stat-name" :title="$t('Entry success')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('Entry success')" v-b-tooltip.hover
                  @click.prevent="sortBy('es')">ES%</a>
             </th>
 
             <th class="match-table__first">
-              <a href="#" class="match-table__stat-name" :title="$t('Ability casts per round')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('Ability casts per round')" v-b-tooltip.hover
                  @click.prevent="sortBy('ar')">A/R</a>
             </th>
 
             <th>
-              <a href="#" class="match-table__stat-name" :title="$t('Total ultimates')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('Total ultimates')" v-b-tooltip.hover
                  @click.prevent="sortBy('ult')">Ult</a>
             </th>
 
             <th>
-              <a href="#" class="match-table__stat-name" :title="$t('Ultimate kills')" v-b-tooltip.hover
+              <a href="#" class="match-table__stat-name sortable" :title="$t('Ultimate kills')" v-b-tooltip.hover
                  @click.prevent="sortBy('uk')">UK</a>
             </th>
           </tr>

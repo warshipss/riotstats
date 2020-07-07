@@ -95,10 +95,13 @@
     color: #fff;
     font-weight: 700;
     font-family: var(--brand-font-family);
-    border-bottom: 1px dotted var(--surface-color);
+
+    &.sortable {
+      border-bottom: 1px dotted var(--surface-color);
+    }
 
     &:hover {
-      color: #333;
+      color: #999;
       text-decoration: none;
     }
   }

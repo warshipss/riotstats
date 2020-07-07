@@ -1,0 +1,36 @@
+.agent-pick {
+  $n: &;
+
+  &__wrapper {
+    &:hover {
+      filter: drop-shadow(0 3px 7px rgba(14, 8, 18, 0.44));
+
+      #{$n}__image {
+        clip-path: polygon(0 0, calc(100% - 1rem) 0, 100% 1rem, 100% 100%, 1rem 100%, 0 calc(100% - 1rem));
+      }
+    }
+
+    &.picked {
+      #{$n}__image {
+        border: .2rem solid var(--surface-color);
+      }
+    }
+  }
+
+  &__image {
+    width: 4rem;
+    height: auto;
+    margin-right: 1rem;
+    border-radius: 4rem;
+    background: var(--surface-bg);
+    transition: 500ms border-radius ease;
+
+    &:hover {
+      border-radius: 0;
+    }
+
+    &_all {
+      padding: 1rem;
+    }
+  }
+}

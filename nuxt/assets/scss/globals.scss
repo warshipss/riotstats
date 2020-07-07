@@ -18,6 +18,8 @@ html {
 }
 
 body {
+  background: var(--body-bg) url('/img/bg.jpg') no-repeat center 0 / cover;
+
   &::-webkit-scrollbar {
     width: .5rem;
   }
@@ -50,6 +52,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .container {
   width: 80rem !important;
   max-width: calc(100% - 2rem) !important;
+}
+
+.stick {
+  top: 2rem;
+  position: sticky;
 }
 
 .icon {
