@@ -16,7 +16,23 @@
     content: ' ';
     position: absolute;
     clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
-    background: url('/img/jumbo.jpg') no-repeat center -12rem / cover;
+    background: url('/img/jumbo.jpg') no-repeat center 0rem / cover;
+
+    @include media-breakpoint-up('sm') {
+      background-position-y: -3rem;
+    }
+
+    @include media-breakpoint-up('md') {
+      background-position-y: -7rem;
+    }
+
+    @include media-breakpoint-up('lg') {
+      background-position-y: -9rem;
+    }
+
+    @include media-breakpoint-up('xl') {
+      background-position-y: -14rem;
+    }
   }
 
   &__title {
