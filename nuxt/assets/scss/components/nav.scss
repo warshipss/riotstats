@@ -21,6 +21,10 @@
     background: #20132a;
     transform: translateX(-50%);
     clip-path: polygon(100% 0, 100% 80%, 50% 100%, 0 80%, 0 0);
+
+    @media (max-width: 48rem) {
+      display: none;
+    }
   }
 
   .navbar-brand {
@@ -77,11 +81,7 @@
     align-items: center;
     color: #fff !important;
     text-transform: uppercase;
-    padding: 0 3rem !important;
-
-    @include media-breakpoint-up('sm') {
-      padding: 0 1rem !important;
-    }
+    padding: 0 1rem !important;
 
     &_language {
       font-weight: bold;

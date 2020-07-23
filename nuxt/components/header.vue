@@ -31,7 +31,7 @@
             </li>
 
             <li class="nav-item">
-              <nuxt-link :to="$playerPath('valorant', 'Moontrance', '1337')" class="nav-link">
+              <nuxt-link :to="$playerPath('valorant', 'refgiton', '9020')" class="nav-link">
                 {{ $t('Stats example') }}
               </nuxt-link>
             </li>
