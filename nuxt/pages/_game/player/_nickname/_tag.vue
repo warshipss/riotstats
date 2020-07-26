@@ -5,21 +5,21 @@
         {{ profileTitle }}
       </h1>
 
-      <div class="profile__meta" v-if="profile">
-        <div class="profile__actions">
-          <a href="#" class="profile__action profile__action_update"
-             :title="$t('Update')" v-b-tooltip.hover @click.prevent="update">
-            <i class="icon icon-update" />
-          </a>
+<!--      <div class="profile__meta" v-if="profile">-->
+<!--        <div class="profile__actions">-->
+<!--          <a href="#" class="profile__action profile__action_update"-->
+<!--             :title="$t('Update')" v-b-tooltip.hover @click.prevent="update">-->
+<!--            <i class="icon icon-update" />-->
+<!--          </a>-->
 
-          <a href="#" class="profile__action profile__action_track"
-             :title="$t('Track this player')" v-b-tooltip.hover @click.prevent="track" v-if="false">
-            <i class="icon icon-star-o" />
-          </a>
-        </div>
+<!--          <a href="#" class="profile__action profile__action_track"-->
+<!--             :title="$t('Track this player')" v-b-tooltip.hover @click.prevent="track" v-if="false">-->
+<!--            <i class="icon icon-star-o" />-->
+<!--          </a>-->
+<!--        </div>-->
 
-        <span class="profile__meta-text">{{ $t('Updated') }}: {{ $ago(profile.updated_at) }}</span>
-      </div>
+<!--        <span class="profile__meta-text">{{ $t('Updated') }}: {{ $ago(profile.updated_at) }}</span>-->
+<!--      </div>-->
     </div>
 
     <h3 v-if="error && error === 'NOT_FETCHED_YET'">
@@ -36,34 +36,34 @@
 
             <div class="profile__stats">
               <div class="stat">
-                <div class="stat__value">{{ profile.stats.matches }}</div>
+                <div class="stat__value">{{ overall.matches }}</div>
                 <div class="stat__label">{{ $t('Matches') }}</div>
               </div>
 
               <div class="stat">
-                <div class="stat__value">{{ Math.floor(profile.stats.summary.wins / profile.stats.summary.matches * 100) }}%</div>
+                <div class="stat__value">{{ Math.floor(overall.wins / overall.matches * 100) }}%</div>
                 <div class="stat__label">{{ $t('Win rate') }}</div>
               </div>
 
               <div class="stat">
-                <div class="stat__value">{{ record.kda.kills }} / {{ record.kda.deaths }} / {{ record.kda.assists }}</div>
+<!--                <div class="stat__value">{{ record.kda.kills }} / {{ record.kda.deaths }} / {{ record.kda.assists }}</div>-->
                 <div class="stat__label">{{ $t('Best') }} KDA</div>
               </div>
             </div>
 
             <div class="profile__stats">
               <div class="stat">
-                <div class="stat__value">{{ Math.floor(profile.stats.summary.score / profile.stats.summary.rounds) }}</div>
+                <div class="stat__value">{{ Math.floor(overall.score / overall.rounds) }}</div>
                 <div class="stat__label">{{ $t('Combat score') }}</div>
               </div>
 
               <div class="stat">
-                <div class="stat__value">{{ Math.floor(profile.stats.summary.damage / profile.stats.summary.rounds) }}</div>
+                <div class="stat__value">{{ Math.floor(overall.damage / overall.rounds) }}</div>
                 <div class="stat__label">{{ $t('Avg. damage') }}</div>
               </div>
 
               <div class="stat">
-                <div class="stat__value">{{ (profile.stats.summary.kills / profile.stats.summary.deaths).toFixed(2) }}</div>
+                <div class="stat__value">{{ (overall.kills / overall.deaths).toFixed(2) }}</div>
                 <div class="stat__label">{{ $t('Kills / Deaths') }}</div>
               </div>
             </div>
@@ -182,7 +182,7 @@
       }
     },
 
-    async asyncData({ app, params }) {
+    async asyncData({ app, params}) {
       const { data } = await app.$axios.get('/player/profile', { params })
 
       if (data.hasOwnProperty('error')) {
@@ -250,6 +250,10 @@
 
       record () {
         return this.profile.stats.record
+      },
+
+      overall () {
+        return this.profile.stats.summary
       },
 
       last () {

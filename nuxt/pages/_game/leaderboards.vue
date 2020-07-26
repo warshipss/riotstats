@@ -25,7 +25,7 @@
           </th>
           <th>
             <a href="#" class="match-table__stat-name" :title="$t('Matches played')" v-b-tooltip.hover
-               @click.prevent>Matches</a>
+               @click.prevent>{{ $t('Matches') }}</a>
           </th>
           <th>
             <a href="#" class="match-table__stat-name sortable" :title="$t('Average combat score')" v-b-tooltip.hover
@@ -54,9 +54,9 @@
         <tr v-for="(player, rank) of leaderboard" :key="player.playerId">
           <td class="match-table__stat-value">{{ rank + 1 }}</td>
           <td class="match-table__stat-value">
-            <a class="match-table__nickname" href="#" @click.prevent>
+            <nuxt-link :to="$playerPath('valorant', ...player.nametag.split('#'))" class="match-table__nickname">
               {{ player.nametag }}
-            </a>
+            </nuxt-link>
           </td>
           <td class="match-table__stat-value">{{ player.matches }}</td>
           <td class="match-table__stat-value">{{ player.avgCombatScore }}</td>

@@ -3,13 +3,12 @@
     <div class="row">
       <div class="col col-md-4">
         <div class="stick">
-          <h4>
-            <i class="icon icon-twitter" /> Twitter
-          </h4>
-
-          <a class="twitter-timeline" data-width="400" data-theme="dark" data-tweet-limit="5"
-             data-chrome="transparent noheader nofooter"
-             href="https://twitter.com/overpeek_com?ref_src=twsrc%5Etfw">Tweets by overpeek_com</a>
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-1470478687013356"
+               data-ad-slot="2237916494"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
         </div>
       </div>
 
@@ -61,9 +60,9 @@
             <tr v-for="(player, rank) of leaderboard" :key="player.playerId">
               <td class="match-table__stat-value">{{ rank + 1 }}</td>
               <td class="match-table__stat-value">
-                <a class="match-table__nickname" href="#" @click.prevent>
+                <nuxt-link :to="$playerPath('valorant', ...player.nametag.split('#'))" class="match-table__nickname">
                   {{ player.nametag }}
-                </a>
+                </nuxt-link>
               </td>
               <td class="match-table__stat-value">{{ player.matches }}</td>
               <td class="match-table__stat-value">{{ player.avgCombatScore }}</td>

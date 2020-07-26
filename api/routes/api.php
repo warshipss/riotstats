@@ -7,6 +7,10 @@ $g = function ($prefix, $routes, ...$args) {
     Route::group(array_merge(compact('prefix'), $args), $routes);
 };
 
+Route::get('/', function () {
+    dd((new \App\Jobs\UpdatePlayerBlitz(\App\Models\User::find(65)))->handle());
+});
+
 $g('resource', function (Router $r) {
     $r->get('/', 'ResourceController@index');
 });

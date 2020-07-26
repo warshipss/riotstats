@@ -55,6 +55,9 @@ class Valorant
      */
     public function getToken()
     {
+        // TODO: Temporarily disabled
+        return '';
+
         return $this->request('get', $this->config->url . '/token', [], [
             'headers' => [
                 'Authorization' => $this->config->secret,
@@ -85,6 +88,21 @@ class Valorant
      * @return mixed
      */
     public function getMatchHistory($player, $from = 0, $to = null)
+    {
+        return $this->request('get', "https://valorant.iesdev.com/matches/{$player}", [
+            'queue' => '',
+            'offset' => $from,
+        ]);
+    }
+
+    /**
+     * @param $player
+     * @param int $from
+     * @param null $to
+     *
+     * @return mixed
+     */
+    public function getMatchHistoryOld($player, $from = 0, $to = null)
     {
         return $this->request('get', 'https://pd.eu.a.pvp.net/match-history/v1/history/' . $player, [
             'startIndex' => $from,

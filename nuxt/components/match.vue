@@ -29,7 +29,7 @@
           </div>
 
           <div class="match__meta">
-            <img class="match__map" :src="'/img/maps/' + $getMap(match.stats.map).slug + '.png'" />
+            <img class="match__map" :src="'/img/maps/' + $getMap(match.stats.map).slug + '.jpeg'" />
 
             <div class="match__meta-content">
               <div class="match__meta-item">
@@ -150,9 +150,11 @@
             </td>
             <td :style="{ borderLeft: '.2rem solid ' + parties[player.party] }">
               <nuxt-link :to="$playerPath(null, users[player.uid].nickname, users[player.uid].tag)"
-                         class="match-table__nickname" v-if="users[player.uid]">
+                         class="match-table__nickname" v-if="users.hasOwnProperty(player.uid) && users[player.uid].nickname !== null">
                 {{ users[player.uid].nickname }} #{{ users[player.uid].tag }}
               </nuxt-link>
+
+              <span class="match-table__nickname" v-else>{{ $ucfirst($getAgent(player.agent).slug) }}</span>
             </td>
 
             <td class="match-table__stat-value match-table__first">{{ player.kills }}</td>
