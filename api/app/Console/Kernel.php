@@ -38,8 +38,9 @@ class Kernel extends ConsoleKernel
 
         if (config('app.env') !== 'dev')
         {
-            $schedule->command('update:users')
-                ->everyFiveMinutes();
+            // TODO: API calls disabled to reduce load
+//            $schedule->command('update:users')
+//                ->everyFiveMinutes();
         }
     }
 
