@@ -24,15 +24,23 @@ class MatchAnalyzer
      */
     public function toArray()
     {
-        return [
-            'teams' => $this->getTeams(),
-            'versus' => $this->getVersus(),
-            'players' => $this->getPlayers(),
+        $info = isset($this->original->matchInfo) ? [
             'map' => $this->original->matchInfo->mapId,
             'ranked' => $this->original->matchInfo->isRanked,
             'completed' => $this->original->matchInfo->isCompleted,
             'type' => $this->original->matchInfo->provisioningFlowID === 'Matchmaking' ? 'matchmaking' : 'custom',
+        ] : [
+            'completed' => true,
+            'map' => $this->original->map,
+            'type' => $this->original->queue,
+            'ranked' => $this->original->ranked,
         ];
+
+        return array_merge([
+            'teams' => $this->getTeams(),
+            'versus' => $this->getVersus(),
+            'players' => $this->getPlayers(),
+        ], $info);
     }
 
     /**
@@ -50,7 +58,7 @@ class MatchAnalyzer
             $versus[$uid] = $uids->toArray();
         }
 
-        if (! $this->original->kills) {
+        if (! isset($this->original->kills)) {
             return $versus;
         }
 
@@ -113,7 +121,7 @@ class MatchAnalyzer
             ];
         }
 
-        if (! $this->original->kills) {
+        if (! isset($this->original->kills)) {
             return $players;
         }
 

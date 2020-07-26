@@ -5,6 +5,10 @@ import { mapState } from 'vuex'
 export default Vue.mixin({
   methods: {
     $ucfirst (s) {
+      if (typeof s !== 'string') {
+        return s
+      }
+
       return s.slice(0, 1).toUpperCase() + s.slice(1)
     },
 
@@ -55,7 +59,7 @@ export default Vue.mixin({
     },
 
     $getMap (uid) {
-      const maps = this.resources.filter(r => r.type === 'map' && r.uid === uid)
+      const maps = this.resources.filter(r => r.type === 'map' && (r.uid === uid || r.data.slug === uid))
 
       if (maps.length) {
         return maps[0].data

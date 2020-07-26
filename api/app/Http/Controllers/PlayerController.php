@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Jobs\UpdatePlayer;
 use Illuminate\Http\Request;
+use App\Jobs\UpdatePlayerBlitz;
 use App\Features\PlayerProcessing;
 use App\Http\Resources\ShortProfile;
 use App\Http\Resources\PlayerProfile;
@@ -48,7 +49,7 @@ class PlayerController extends Controller
             $this->fail('FETCHED_RECENTLY');
         }
 
-        UpdatePlayer::dispatch($user);
+        UpdatePlayerBlitz::dispatch($user);
 
         return 'OK';
     }
@@ -118,7 +119,7 @@ class PlayerController extends Controller
                 $this->fail('NOT_FOUND');
             }
 
-            UpdatePlayer::dispatch($user);
+            UpdatePlayerBlitz::dispatch($user);
         }
 
         return $user;
@@ -135,7 +136,7 @@ class PlayerController extends Controller
     {
         if (! $user->fetched_at)
         {
-            UpdatePlayer::dispatch($user);
+            UpdatePlayerBlitz::dispatch($user);
 
             $this->fail('NOT_FETCHED_YET');
         }

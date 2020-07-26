@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Riot\Valorant;
 use App\Riot\PlayerAnalyzer;
+use GuzzleHttp\Client;
 
 trait PlayerProcessing
 {
@@ -70,6 +71,34 @@ trait PlayerProcessing
      * @return User|null
      */
     public function findExact($nickname, $tag)
+    {
+        $tag = mb_strtolower($tag);
+        $nickname = mb_strtolower($nickname);
+
+        $data = (string) (new Client)->get("https://valorant.iesdev.com/player/{$nickname}-{$tag}")->getBody();
+
+        $player = json_decode($data);
+
+        if (! isset($player->id)) {
+            return null;
+        }
+
+        $user = User::firstOrCreate(['uid' => $player->id]);
+
+        $user->tag = $player->tag;
+        $user->nickname = $player->name;
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * @param $nickname
+     * @param $tag
+     *
+     * @return User|null
+     */
+    public function findExactOld($nickname, $tag)
     {
         /**
          * @var Valorant $api

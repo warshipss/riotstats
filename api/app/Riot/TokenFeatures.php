@@ -15,6 +15,9 @@ trait TokenFeatures
      */
     public function getToken()
     {
+        // Temporarily disabled
+        return '';
+
         $token = Token::where('expires_at', '>', Carbon::now()->timestamp)
             ->first();
 

@@ -24,11 +24,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('tokens:check')
-            ->everyMinute();
+//        $schedule->command('tokens:check')
+//            ->everyMinute();
 
-        $schedule->command('tokens:clear')
-            ->hourly();
+//        $schedule->command('tokens:clear')
+//            ->hourly();
 
         $schedule->command('sitemap:generate')
             ->daily();
