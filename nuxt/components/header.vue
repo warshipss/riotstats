@@ -29,12 +29,6 @@
                 {{ $t('Leaderboards') }}
               </nuxt-link>
             </li>
-
-            <li class="nav-item">
-              <nuxt-link :to="$playerPath('valorant', 'refgiton', '9020')" class="nav-link">
-                {{ $t('Stats example') }}
-              </nuxt-link>
-            </li>
           </ul>
 
           <ul class="navbar-nav">
