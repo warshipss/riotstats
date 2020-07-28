@@ -45,7 +45,7 @@ export default {
   */
   loading: { color: '#fff' },
   /*
-  ** Global CSS
+  ** Global CSSr
   */
   css: [
     { src: '~/assets/scss/app.scss', lang: 'scss' }
